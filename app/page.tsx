@@ -1,65 +1,128 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState, useEffect, useRef } from 'react'
+import Nav from '@/components/Nav'
+import Hero from '@/components/Hero'
+import Footer from '@/components/Footer'
+import SlideNav from '@/components/SlideNav'
+import Thumb from '@/components/Thumb'
+import ResumeModal from '@/components/ResumeModal'
+import { useCurtain } from '@/components/CurtainTransition'
+import { projects } from '@/lib/data'
+
+export default function HomePage() {
+  const { navigate } = useCurtain()
+  const [activeIdx, setActiveIdx] = useState(0)
+  const [resumeOpen, setResumeOpen] = useState(false)
+  const slideRefs = useRef<(HTMLElement | null)[]>([])
+
+  const pairs: (typeof projects)[] = []
+  for (let i = 0; i < projects.length; i += 2) {
+    pairs.push(projects.slice(i, i + 2))
+  }
+
+  const slides = [
+    { id: 'hero', label: 'Intro' },
+    ...pairs.map((pair, i) => ({
+      id: `pair-${i}`,
+      label: pair.map((p) => p.short).join(' + '),
+    })),
+    { id: 'footer', label: 'Get in touch' },
+  ]
+
+  useEffect(() => {
+    document.documentElement.classList.add('snap-edges')
+    return () => document.documentElement.classList.remove('snap-edges')
+  }, [])
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        let best: IntersectionObserverEntry | null = null
+        for (const e of entries) {
+          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
+            best = e
+          }
+        }
+        if (best !== null) {
+          const idx = slideRefs.current.indexOf((best as IntersectionObserverEntry).target as HTMLElement)
+          if (idx >= 0) setActiveIdx(idx)
+        }
+      },
+      { threshold: [0.4, 0.6, 0.8] }
+    )
+    slideRefs.current.forEach((el) => el && io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
+  const scrollTo = (i: number) => {
+    const el = slideRefs.current[i]
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="page" data-screen-label="Home">
+      <Nav onResume={() => setResumeOpen(true)} />
+
+      <section ref={(el) => { slideRefs.current[0] = el }}>
+        <Hero />
+      </section>
+
+      {pairs.map((pair, i) => (
+        <section
+          key={`pair-${i}`}
+          ref={(el) => { slideRefs.current[i + 1] = el }}
+          className="snap project-pair-slide"
+        >
+          <div className="container">
+            <div className="project-pair">
+              {pair.map((p) => (
+                <div key={p.id} className="project-pair-row">
+                  <div>
+                    <div className="ps-eyebrow">
+                      <span className="ps-index">
+                        {p.index} / {String(projects.length).padStart(2, '0')}
+                      </span>
+                      <span className="ps-kind">{p.kind}</span>
+                      <span>{p.year}</span>
+                    </div>
+                    <h2 className="ps-title">{p.title}</h2>
+                    <p className="ps-summary">{p.summary}</p>
+                    <div className="ps-tags">
+                      {p.tags.map((tag) => (
+                        <span key={tag} className="ps-tag">{tag}</span>
+                      ))}
+                    </div>
+                    <button className="ps-cta" onClick={() => navigate(`/project/${p.id}`)}>
+                      <span>View case study</span>
+                      <span>→</span>
+                    </button>
+                  </div>
+                  <div className="ps-thumb">
+                    <Thumb
+                      color={p.color}
+                      label={`${p.short} — hero.png`}
+                      meta={`${p.index} · ${p.role}`}
+                      badge={p.status === 'draft' ? 'WIP' : undefined}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+
+      <section
+        ref={(el) => { slideRefs.current[pairs.length + 1] = el }}
+        className="snap footer-slide"
+      >
+        <Footer />
+      </section>
+
+      <SlideNav slides={slides} activeIdx={activeIdx} onDotClick={scrollTo} />
+
+      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
-  );
+  )
 }
