@@ -70,10 +70,11 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <CurtainTransition />
-          <CustomCursor />
-          {children}
-          <TweaksPanel />
+          <CurtainTransition>
+            <CustomCursor />
+            {children}
+            <TweaksPanel />
+          </CurtainTransition>
         </ThemeProvider>
       </body>
     </html>

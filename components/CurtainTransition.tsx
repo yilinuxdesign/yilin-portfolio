@@ -14,7 +14,7 @@ export function useCurtain() {
   return useContext(CurtainContext)
 }
 
-export default function CurtainTransition() {
+export default function CurtainTransition({ children }: { children?: React.ReactNode }) {
   const curtainRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const [, setNavigating] = useState(false)
@@ -49,6 +49,7 @@ export default function CurtainTransition() {
 
   return (
     <CurtainContext.Provider value={{ navigate }}>
+      {children}
       <div
         ref={curtainRef}
         className="curtain"
