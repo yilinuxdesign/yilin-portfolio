@@ -52,8 +52,33 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'biller-search',
+    id: 'check-deposit',
     index: '03',
+    title: 'Mobile Check Deposit — Reducing Failed Deposits with a Guided Capture Flow',
+    short: 'Check Deposit',
+    kind: 'Industry Work',
+    year: '2025',
+    role: 'Senior Product Designer',
+    tags: ['Mobile Design', 'Computer Vision', 'Personal Finance'],
+    color: 'oklch(0.52 0.13 145)',
+    status: 'shipped',
+    summary:
+      'Rebuilding mobile check deposit around real-time capture guidance — coaching customers to a usable image while the camera is still open, instead of failing the deposit three screens later. End-to-end work across the camera experience, the review screen, and the error and confirmation states.',
+    problem:
+      'Check deposit had the highest abandonment of any money-movement flow. Blurry, glare-washed, or cropped captures bounced at the back end, so customers learned they\'d failed only after submitting — and many never came back to retry. The old flow gave no feedback during capture and cryptic rejections after it.',
+    approach:
+      'I mapped every back-end rejection reason to a plain-language fix, then designed a guided camera layer that reads the live frame and surfaces one clear instruction at a time — \'hold camera directly over check\', \'too dark for image capture\', \'hold phone steady\' — auto-firing the shutter only on a good frame. I reworked the review screen with at-a-glance front/back validation and rebuilt the error states (amount mismatch, deposit limits) so every dead end had a way forward.',
+    outcome:
+      'First-attempt capture success rose sharply once guidance moved into the camera. Back-end image rejections dropped by half and \'deposit didn\'t work\' support contacts fell, while the clarified error and confirmation states cut repeat submissions of the same check.',
+    metrics: [
+      { label: 'First-attempt success', value: '89%', delta: '+27pp' },
+      { label: 'Image rejections', value: '−50%', delta: 'vs legacy' },
+      { label: 'Guidance states designed', value: '20+', delta: 'real-time hints' },
+    ],
+  },
+  {
+    id: 'biller-search',
+    index: '04',
     title: 'Transforming Biller Discovery with a More Intelligent Search Experience',
     short: 'Advanced Search',
     kind: 'Industry Work',
@@ -78,7 +103,7 @@ export const projects: Project[] = [
   },
   {
     id: 'citi-app',
-    index: '04',
+    index: '05',
     title: 'Refreshing Citi App Experience to Drive Mobile Adoption',
     short: 'Citi App Refresh',
     kind: 'Industry Work',
@@ -103,7 +128,7 @@ export const projects: Project[] = [
   },
   {
     id: 'toyota-yui',
-    index: '05',
+    index: '06',
     title: 'Creating a voice-based multimodal car experience for Tokyo Olympics',
     short: 'Toyota YUI',
     kind: 'Industry Work',
@@ -146,6 +171,7 @@ export function shiftColor(oklchStr: string, delta: number): string {
 
 export function quoteFor(id: string): string {
   const map: Record<string, string> = {
+    'check-deposit': 'I used to dread depositing a check — you never knew if the photo took. Now it just tells me when it\'s good and snaps it for me.',
     'biller-search': 'I just typed the way I thought about it — like, \'electric\'. And it found my power company. That\'s never happened before.',
     'citi-app': 'It used to feel like a menu of every product the bank sells. Now it feels like an app that knows I\'m here to pay something.',
     'toyota-yui': 'She felt like a quiet co-pilot — not a robot reading off a list.',

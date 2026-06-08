@@ -10,6 +10,7 @@ import Footer from '@/components/Footer'
 import Thumb from '@/components/Thumb'
 import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
+import { CheckDepositHero, CheckDepositScreens } from '@/components/detail/CheckDeposit'
 import { projects, getProject, getNextProject, shiftColor, quoteFor } from '@/lib/data'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -25,6 +26,7 @@ export default function ProjectPage() {
   const { navigate } = useCurtain()
   const [resumeOpen, setResumeOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const isCheckDeposit = project.id === 'check-deposit'
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -114,13 +116,19 @@ export default function ProjectPage() {
           </div>
         </div>
 
-        <div className="hero-img reveal">
-          <Thumb
-            color={project.color}
-            label={`${project.short.toLowerCase().replace(/\s/g, '-')}-hero.png`}
-            meta="hero / 16:9"
-          />
-        </div>
+        {isCheckDeposit ? (
+          <div className="reveal" style={{ marginTop: 'clamp(40px, 6vh, 64px)' }}>
+            <CheckDepositHero />
+          </div>
+        ) : (
+          <div className="hero-img reveal">
+            <Thumb
+              color={project.color}
+              label={`${project.short.toLowerCase().replace(/\s/g, '-')}-hero.png`}
+              meta="hero / 16:9"
+            />
+          </div>
+        )}
       </section>
 
       {/* Sticky scroll narrative */}
@@ -189,32 +197,42 @@ export default function ProjectPage() {
       </section>
 
       {/* Visual placeholders */}
-      <section className="container" style={{ paddingTop: 100 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-          <div className="hero-img reveal" style={{ margin: 0, gridColumn: '1 / -1' }}>
-            <Thumb
-              color={project.color}
-              label="key user flow — main happy path"
-              meta="flow-overview / 16:9"
-              style={{ opacity: 0.92 }}
-            />
+      {isCheckDeposit ? (
+        <section className="container" style={{ paddingTop: 100 }}>
+          <div className="section-label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)' }}>
+            <h2>The screens</h2>
+            <span className="count">capture · review · recover</span>
           </div>
-          <div className="reveal" style={{ aspectRatio: '4/3', borderRadius: 6, overflow: 'hidden' }}>
-            <Thumb
-              color={shiftColor(project.color, 8)}
-              label="before"
-              meta="screen / 4:3"
-            />
+          <CheckDepositScreens />
+        </section>
+      ) : (
+        <section className="container" style={{ paddingTop: 100 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            <div className="hero-img reveal" style={{ margin: 0, gridColumn: '1 / -1' }}>
+              <Thumb
+                color={project.color}
+                label="key user flow — main happy path"
+                meta="flow-overview / 16:9"
+                style={{ opacity: 0.92 }}
+              />
+            </div>
+            <div className="reveal" style={{ aspectRatio: '4/3', borderRadius: 6, overflow: 'hidden' }}>
+              <Thumb
+                color={shiftColor(project.color, 8)}
+                label="before"
+                meta="screen / 4:3"
+              />
+            </div>
+            <div className="reveal" style={{ aspectRatio: '4/3', borderRadius: 6, overflow: 'hidden' }}>
+              <Thumb
+                color={shiftColor(project.color, -8)}
+                label="after"
+                meta="screen / 4:3"
+              />
+            </div>
           </div>
-          <div className="reveal" style={{ aspectRatio: '4/3', borderRadius: 6, overflow: 'hidden' }}>
-            <Thumb
-              color={shiftColor(project.color, -8)}
-              label="after"
-              meta="screen / 4:3"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Pull quote */}
       <section className="container">

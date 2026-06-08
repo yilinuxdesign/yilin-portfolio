@@ -1,55 +1,99 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import Thumb from '@/components/Thumb'
 import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
 import { projects } from '@/lib/data'
 
-const TIMELINE = [
+type TimelineEntry = {
+  year: string
+  duration: string
+  title: string
+  place: string
+  location: string
+  summary: string
+  details?: string
+  bullets?: string[]
+}
+
+const TIMELINE: TimelineEntry[] = [
   {
-    year: '2021 –', duration: '5 yrs', title: 'Senior Product Designer', place: 'Citi',
-    location: 'Seattle / Remote',
-    summary: 'Leading design across the consumer Bill Pay, Open Banking, and money-movement surfaces — from search & discovery to multi-account orchestration.',
+    year: 'Jan 2023 —',
+    duration: '3 yrs 5 mos',
+    title: 'Lead Designer, Pay & Service',
+    place: 'Citi',
+    location: 'United States · Contract',
+    summary: 'Leading UX for consumer payment journeys across web and mobile.',
+    details:
+      "Lead designer on Citi's Pay & Service product, owning end-to-end UX for the most critical consumer payment surfaces — from bill-pay search and account linking to spend insights and subscription management.",
     bullets: [
-      'Lead designer on Bill Pay search redesign — raised first-search success from 41% → 78% and dropped support tickets by 42%.',
-      'Designed the unified account-picker for Mastercard Open Banking integration; adopted as the org reference pattern across three squads.',
-      'Reorganized mobile IA on goal-led mental models; mobile MAUs grew 19% YoY post-launch.',
-      'Currently leading two parallel concepts — Credit-Card Spend Summary and Subscription Management — both in active research.',
-      'Mentor four junior designers; run the weekly studio critique.',
+      'Lead designer on the Bill Pay biller-search redesign — raised first-search success and cut support tickets driven by discovery failures.',
+      'Designed the unified account-picker for Mastercard Open Banking integration; pattern adopted across multiple money-movement squads.',
+      'Currently leading two parallel concepts — Credit-Card Spend Summary and Subscription Management — both in active research and design.',
+      "Mentor junior designers; run the studio's regular critique.",
     ],
   },
   {
-    year: '2019 – 21', duration: '2 yrs', title: 'Interaction Designer', place: 'Toyota Research Institute',
-    location: 'Los Altos, CA',
-    summary: 'Designed multimodal voice and on-screen experiences for autonomous-mobility concepts — including the e-Palette shuttle built for the (postponed) Tokyo Olympic Village.',
+    year: 'Jan 2021 — Jan 2023',
+    duration: '2 yrs 1 mo',
+    title: 'UX Designer',
+    place: 'Citi',
+    location: 'United States · Contract',
+    summary: 'Designed across digital payment services — servicing tools to consumer flows.',
+    details:
+      "Worked across the full suite of Citi's digital payment services, from internal servicing tools used by support agents to consumer-facing flows on web and mobile.",
     bullets: [
-      'Authored the personality framework for the in-car assistant — six languages, 47 conversation flows.',
-      'Ran 22 Wizard-of-Oz sessions in a static mock shuttle on the Los Altos campus to validate dialog patterns.',
-      'Localization decisions and personality bible carried forward into Toyota\'s connected-services standards.',
-      'Co-presented the concept on the CES 2021 main stage.',
+      'Contributed to mobile IA work that restructured navigation around customer goals rather than product lines.',
+      'Designed payment confirmation, status, and exception patterns reused across multiple product surfaces.',
+      'Partnered closely with research and engineering on accessibility audits and remediation work.',
     ],
   },
   {
-    year: '2017 – 19', duration: '2 yrs', title: 'M.S. Information Management', place: 'Syracuse University · iSchool',
+    year: 'Dec 2019 — Jun 2020',
+    duration: '7 mos',
+    title: 'Interaction Designer',
+    place: 'Toyota Research Institute',
+    location: 'San Francisco Bay Area',
+    summary: 'Voice UX for an autonomous-vehicle AI agent, slated for the 2021 Tokyo Olympics demo.',
+    details:
+      'Designed the conversational user experience for an in-vehicle AI agent at TRI — a project that was preparing to debut publicly at the 2021 Tokyo Olympics autonomous-mobility demo.',
+    bullets: [
+      'Defined the conversational model, persona, and dialog patterns for the in-vehicle assistant.',
+      'Ran Wizard-of-Oz sessions in a static mock vehicle to validate handoff and turn-taking moments.',
+      'Partnered with research and ML engineers to translate user-research findings into intent and slot design.',
+    ],
+  },
+  {
+    year: '2017 — 2019',
+    duration: 'M.S.',
+    title: 'Information Science (HCI)',
+    place: 'Syracuse University',
     location: 'Syracuse, NY',
-    summary: 'Concentration in HCI and Data Analytics. Thesis explored how on-campus food services could better serve 22,000 students through mixed-methods research.',
-    bullets: [
-      'Teaching assistant for Information Architecture and Interaction Design courses.',
-      'Built dashboards in Tableau adopted by the university\'s dining director.',
-      'Designed and shipped a hybrid-event prototype for Meetup that ran as my graduate capstone.',
-    ],
+    summary: 'HCI concentration + Certification of Advanced Study in Data Science.',
+    details:
+      'Master of Science in Information Science with a Human-Computer Interaction concentration. Earned a Certification of Advanced Study in Data Science alongside the degree. Coursework spanned interaction design, IA, qualitative research methods, and statistical analysis.',
   },
   {
-    year: '2013 – 17', duration: '4 yrs', title: 'B.A. Industrial Design', place: 'Sichuan Fine Arts Institute',
-    location: 'Chongqing, China',
-    summary: 'Trained in hands-on physical design — model-making, sketching, materials — which still informs the way I think about hierarchy and craft on screen.',
-    bullets: [
-      'Graduated with Honors. Thesis on tactile interfaces for low-vision users.',
-      'Two-year teaching apprenticeship in the foundational drawing studio.',
-    ],
+    year: '2016 — 2017',
+    duration: 'M.S.',
+    title: 'Data Journalism',
+    place: 'Syracuse University',
+    location: 'Syracuse, NY',
+    summary: 'Data storytelling, visualization, R, and Python.',
+    details:
+      'Master of Science in Data Journalism — a year focused on data storytelling, visualization, and audience-facing reporting. Foundational skills in R, Python, and the kind of stakeholder communication I lean on in product work every day.',
+  },
+  {
+    year: '2012 — 2016',
+    duration: 'B.A.',
+    title: 'Literature, History & Philosophy',
+    place: 'Soochow University',
+    location: 'Suzhou, China',
+    summary: 'Humanities foundation — close reading, ambiguity, finding the human story.',
+    details:
+      'A humanities undergraduate degree that taught me to read closely, hold ambiguity, and find the human story underneath any dataset — instincts I still rely on as a designer.',
   },
 ]
 
@@ -59,9 +103,37 @@ const SKILLS = [
   { group: 'Methods', items: ['Heuristic Review', 'Card Sort', 'Tree Test', 'Diary Study', 'Usability Testing', 'Design Research'] },
 ]
 
+const isEducation = (t: TimelineEntry) => /M\.S\.|B\.A\.|Ph\.D\./.test(t.duration)
+
 export default function AboutPage() {
   const { navigate } = useCurtain()
   const [resumeOpen, setResumeOpen] = useState(false)
+  const [expandedExp, setExpandedExp] = useState<number | null>(null)
+  const [expandedEdu, setExpandedEdu] = useState<number | null>(null)
+
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal')
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in')
+          io.unobserve(e.target)
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
+    )
+    els.forEach((el) => io.observe(el))
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.reveal').forEach((el) => {
+        const r = (el as HTMLElement).getBoundingClientRect()
+        if (r.top < window.innerHeight) el.classList.add('in')
+      })
+    })
+    return () => io.disconnect()
+  }, [])
+
+  const experience = TIMELINE.filter((t) => !isEducation(t))
+  const education = TIMELINE.filter(isEducation)
 
   return (
     <div className="page" data-screen-label="About">
@@ -69,11 +141,11 @@ export default function AboutPage() {
 
       <section className="container about-hero">
         <div className="hero-eyebrow">
-          <span>About — A short version</span>
+          <span>About — Senior Product Designer</span>
         </div>
         <h1 className="hero-name" style={{ fontSize: 'clamp(40px, 7vw, 96px)' }}>
-          Designer, listener,<br />
-          <em>occasional</em> illustrator.
+          Designing products<br />
+          people <em>actually</em> use.
         </h1>
       </section>
 
@@ -81,64 +153,134 @@ export default function AboutPage() {
         <div className="about-grid">
           <div className="about-text">
             <p className="lead">
-              I design for the boring parts of life — paying bills, finding a meetup,
-              telling a car where to go — because that&apos;s where good UX actually changes things.
+              I&apos;m a product designer with seven years of experience shaping digital
+              experiences for teams at Citi and Toyota.
             </p>
             <p>
-              I grew up in Chongqing, studied industrial design in southern China, then moved to
-              Syracuse for graduate school. My thesis on data-informed dining choices got me
-              hooked on the messy hand-off between research and product decisions.
+              My strength is making ambiguous problems legible. I dig for the real user
+              pain points behind a brief, map the full journey end-to-end, and turn
+              what I find into clear narratives that stakeholders, engineers, and
+              researchers can all act on together. The work I&apos;m proudest of is usually
+              the work where the team finally agrees on what we&apos;re solving.
             </p>
             <p>
-              At Toyota Research Institute I worked on multimodal interaction for autonomous vehicles —
-              the project that taught me to design for shared trust at scale. For the past several
-              years I&apos;ve focused that lens on financial products: leading mobile-banking IA work,
-              search-discovery experiences, and the open-banking flows that quietly move money
-              behind the scenes.
+              Outside of Figma you&apos;ll find me on a trail somewhere in Washington State
+              with my German Shepherd, in the kitchen testing one more bread recipe,
+              or moving plants around the garden until they look right.
             </p>
             <p>
-              Outside of work I cook a lot of Sichuan food, photograph small details in cities,
-              and serve as a long-suffering judge of my cat Mochi&apos;s bouldering routes.
+              Always up for a conversation about design, dogs, or what to cook this weekend.
             </p>
           </div>
 
           <div className="about-portrait">
-            <Thumb
-              color="oklch(0.55 0.13 30)"
-              label="your portrait goes here"
-              meta="portrait.jpg / 4:5"
+            <img
+              src="/assets/portrait.jpg"
+              alt="Yilin Jia"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 6 }}
             />
           </div>
         </div>
 
         <div className="section-label">
           <h2>Experience</h2>
-          <span className="count">2013 — Present</span>
+          <span className="count">2019 — Present</span>
         </div>
-
-        <div className="timeline">
-          {TIMELINE.map((t, i) => (
-            <div key={i} className="exp-row reveal">
-              <div className="exp-meta">
-                <span className="exp-year">{t.year}</span>
-                <span className="exp-duration mono">{t.duration}</span>
-                <span className="exp-location mono">{t.location}</span>
-              </div>
-              <div className="exp-body">
-                <div className="exp-headline">
-                  <h3 className="exp-title">{t.title}</h3>
-                  <span className="exp-place">{t.place}</span>
+        <ol className={`cv-row-list ${expandedExp !== null ? 'has-expanded' : ''}`}>
+          {experience.map((t, i) => {
+            const isExpanded = expandedExp === i
+            const handleClick = () => setExpandedExp(isExpanded ? null : i)
+            return (
+              <li
+                key={i}
+                className={`cv-card reveal ${isExpanded ? 'expanded' : ''}`}
+                onClick={handleClick}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isExpanded}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleClick()
+                  }
+                }}
+              >
+                <div className="cv-card-top">
+                  <span className="cv-row-year mono">{t.year.replace(/\s+—\s*$/, ' — Now')}</span>
+                  <span className="cv-card-place mono">{t.place}</span>
                 </div>
-                <p className="exp-summary">{t.summary}</p>
-                {t.bullets.length > 0 && (
-                  <ul className="exp-bullets">
-                    {t.bullets.map((b, j) => <li key={j}>{b}</li>)}
-                  </ul>
+                <div className="cv-card-title">
+                  <span className="cv-row-role">{t.title}</span>
+                </div>
+                {!isExpanded && <p className="cv-card-summary">{t.summary}</p>}
+                {isExpanded && (
+                  <div className="cv-card-details">
+                    <p className="cv-card-details-lead">{t.details || t.summary}</p>
+                    {t.bullets && (
+                      <ul className="cv-card-bullets">
+                        {t.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                      </ul>
+                    )}
+                    <button
+                      className="cv-card-close mono"
+                      onClick={(e) => { e.stopPropagation(); setExpandedExp(null) }}
+                    >
+                      ← Collapse
+                    </button>
+                  </div>
                 )}
-              </div>
-            </div>
-          ))}
+                {!isExpanded && <span className="cv-card-more mono">More ↗</span>}
+              </li>
+            )
+          })}
+        </ol>
+
+        <div className="section-label">
+          <h2>Education</h2>
+          <span className="count">2012 — 2019</span>
         </div>
+        <ol className={`cv-row-list ${expandedEdu !== null ? 'has-expanded' : ''}`}>
+          {education.map((t, i) => {
+            const isExpanded = expandedEdu === i
+            const handleClick = () => setExpandedEdu(isExpanded ? null : i)
+            return (
+              <li
+                key={i}
+                className={`cv-card reveal ${isExpanded ? 'expanded' : ''}`}
+                onClick={handleClick}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isExpanded}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleClick()
+                  }
+                }}
+              >
+                <div className="cv-card-top">
+                  <span className="cv-row-year mono">{t.year}</span>
+                  <span className="cv-row-degree">{t.duration}</span>
+                </div>
+                <div className="cv-card-title">{t.title}</div>
+                <div className="cv-card-place mono" style={{ marginTop: 4 }}>{t.place}</div>
+                {!isExpanded && <p className="cv-card-summary">{t.summary}</p>}
+                {isExpanded && (
+                  <div className="cv-card-details">
+                    <p className="cv-card-details-lead">{t.details || t.summary}</p>
+                    <button
+                      className="cv-card-close mono"
+                      onClick={(e) => { e.stopPropagation(); setExpandedEdu(null) }}
+                    >
+                      ← Collapse
+                    </button>
+                  </div>
+                )}
+                {!isExpanded && <span className="cv-card-more mono">More ↗</span>}
+              </li>
+            )
+          })}
+        </ol>
 
         <div className="section-label">
           <h2>Toolkit</h2>

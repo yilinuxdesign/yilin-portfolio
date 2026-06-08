@@ -2,25 +2,42 @@
 
 import { useEffect } from 'react'
 
-const TIMELINE = [
+type Row = { year: string; title: string; place: string; bullets?: string[] }
+
+const EXPERIENCE: Row[] = [
   {
-    year: '2021 –', duration: '5 yrs', title: 'Senior Product Designer', place: 'Citi',
+    year: 'Jan 2023 — Now',
+    title: 'Lead Designer, Pay & Service',
+    place: 'Citi',
     bullets: [
-      'Lead designer on Citi\'s bill-pay search redesign — raised first-search success from 41% → 78%.',
-      'Designed unified account-picker for Mastercard Open Banking; became the org\'s reference pattern for multi-source money movement.',
-      'Reorganized mobile IA on goal-led mental models; grew mobile MAUs 19% YoY.',
-      'Coached 4 junior designers and ran the studio\'s weekly critique.',
+      'Led the Bill Pay biller-search redesign — raised first-search success and cut discovery-related support tickets.',
+      'Designed the unified account-picker for Mastercard Open Banking integration; adopted across multiple money-movement squads.',
     ],
   },
   {
-    year: '2019 – 21', duration: '2 yrs', title: 'Interaction Designer', place: 'Toyota Research Institute',
+    year: 'Jan 2021 — Jan 2023',
+    title: 'UX Designer',
+    place: 'Citi',
     bullets: [
-      'Multimodal interaction design for Toyota\'s concept shuttle shown at CES and built for Tokyo Olympics.',
-      'Authored localization framework adopted org-wide for connected services.',
+      'Contributed to mobile IA work that restructured navigation around customer goals.',
+      'Designed payment confirmation, status, and exception patterns reused across multiple surfaces.',
     ],
   },
-  { year: '2017 – 19', duration: '2 yrs', title: 'M.S. Information Management', place: 'Syracuse University · iSchool', bullets: [] },
-  { year: '2013 – 17', duration: '4 yrs', title: 'B.A. Industrial Design', place: 'Sichuan Fine Arts Institute', bullets: [] },
+  {
+    year: 'Dec 2019 — Jun 2020',
+    title: 'Interaction Designer',
+    place: 'Toyota Research Institute',
+    bullets: [
+      'Defined the conversational model, persona, and dialog patterns for the in-vehicle assistant.',
+      'Ran Wizard-of-Oz sessions in a static mock vehicle to validate handoff moments.',
+    ],
+  },
+]
+
+const EDUCATION: Row[] = [
+  { year: '2017 — 2019', title: 'M.S. · Information Science (HCI)', place: 'Syracuse University' },
+  { year: '2016 — 2017', title: 'M.S. · Data Journalism', place: 'Syracuse University' },
+  { year: '2012 — 2016', title: 'B.A. · Literature, History & Philosophy', place: 'Soochow University' },
 ]
 
 export default function ResumeModal({ onClose }: { onClose: () => void }) {
@@ -53,14 +70,13 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
         </div>
         <div className="modal-body">
           <div style={{ fontFamily: 'var(--font-body)', color: 'var(--fg)' }}>
-            {/* Header */}
             <div style={{
               display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
               paddingBottom: 24, borderBottom: '1px solid var(--rule)', marginBottom: 28,
             }}>
               <div>
                 <h1 style={{
-                  fontFamily: 'var(--font-display)', fontWeight: 'var(--display-weight)',
+                  fontFamily: 'var(--font-display)', fontWeight: 'var(--display-weight)' as React.CSSProperties['fontWeight'],
                   fontSize: 36, letterSpacing: 'var(--display-tracking)', margin: '0 0 4px',
                 }}>Yilin Jia</h1>
                 <p className="mono" style={{ margin: 0, fontSize: 12, color: 'var(--fg-faint)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -82,13 +98,13 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
             </ResumeSection>
 
             <ResumeSection title="Experience">
-              {TIMELINE.slice(0, 2).map((t) => (
-                <ResumeRow key={t.year} left={t.year} title={t.title} place={t.place} bullets={t.bullets} />
+              {EXPERIENCE.map((t) => (
+                <ResumeRow key={t.year} left={t.year} title={t.title} place={t.place} bullets={t.bullets ?? []} />
               ))}
             </ResumeSection>
 
             <ResumeSection title="Education">
-              {TIMELINE.slice(2).map((t) => (
+              {EDUCATION.map((t) => (
                 <ResumeRow key={t.year} left={t.year} title={t.title} place={t.place} bullets={[]} />
               ))}
             </ResumeSection>

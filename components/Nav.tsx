@@ -21,8 +21,11 @@ export default function Nav({ onResume }: { onResume: () => void }) {
           onClick={() => navigate('/')}
           aria-label="Yilin Jia — home"
         >
-          <span className="dot" aria-hidden="true" />
-          <span>Yilin Jia</span>
+          <img
+            src="https://cdn.prod.website-files.com/5d978a17269be41e23e22aca/62cb89e8e819846ebfc2acba_logo.png"
+            alt="Yilin Jia"
+            style={{ height: 32, width: 'auto', display: 'block' }}
+          />
         </button>
 
         <div className="nav-links">

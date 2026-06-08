@@ -36,7 +36,7 @@ export default function Hero() {
         <div className="hero-top" data-gsap-hero>
           <div className="hero-eyebrow" style={{ margin: 0 }}>
             <span className="pulse" aria-hidden="true" />
-            <span>Currently designing at Citi</span>
+            <span>Lead Designer, Pay & Service · Citi</span>
           </div>
           <div className="hero-locator mono">
             <span style={{ fontWeight: 600 }}>Yilin Jia</span>
@@ -58,7 +58,7 @@ export default function Hero() {
           <div className="hero-meta-grid" data-gsap-hero>
             <div className="hero-meta-cell">
               <div className="mono cell-label">Currently</div>
-              <div className="cell-value">Senior Product Designer, Citi</div>
+              <div className="cell-value">Lead Designer, Pay & Service · Citi</div>
             </div>
             <div className="hero-meta-cell">
               <div className="mono cell-label">Focus</div>

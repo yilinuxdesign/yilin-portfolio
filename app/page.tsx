@@ -16,17 +16,9 @@ export default function HomePage() {
   const [resumeOpen, setResumeOpen] = useState(false)
   const slideRefs = useRef<(HTMLElement | null)[]>([])
 
-  const pairs: (typeof projects)[] = []
-  for (let i = 0; i < projects.length; i += 2) {
-    pairs.push(projects.slice(i, i + 2))
-  }
-
   const slides = [
     { id: 'hero', label: 'Intro' },
-    ...pairs.map((pair, i) => ({
-      id: `pair-${i}`,
-      label: pair.map((p) => p.short).join(' + '),
-    })),
+    ...projects.map((p) => ({ id: p.id, label: p.short })),
     { id: 'footer', label: 'Get in touch' },
   ]
 
@@ -60,6 +52,8 @@ export default function HomePage() {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  const openProject = (id: string) => navigate(`/project/${id}`)
+
   return (
     <div className="page" data-screen-label="Home">
       <Nav onResume={() => setResumeOpen(true)} />
@@ -68,53 +62,58 @@ export default function HomePage() {
         <Hero />
       </section>
 
-      {pairs.map((pair, i) => (
+      {projects.map((p, i) => (
         <section
-          key={`pair-${i}`}
+          key={p.id}
           ref={(el) => { slideRefs.current[i + 1] = el }}
-          className="snap project-pair-slide"
+          className="snap project-row-slide"
         >
           <div className="container">
-            <div className="project-pair">
-              {pair.map((p) => (
-                <div key={p.id} className="project-pair-row">
-                  <div>
-                    <div className="ps-eyebrow">
-                      <span className="ps-index">
-                        {p.index} / {String(projects.length).padStart(2, '0')}
-                      </span>
-                      <span className="ps-kind">{p.kind}</span>
-                      <span>{p.year}</span>
-                    </div>
-                    <h2 className="ps-title">{p.title}</h2>
-                    <p className="ps-summary">{p.summary}</p>
-                    <div className="ps-tags">
-                      {p.tags.map((tag) => (
-                        <span key={tag} className="ps-tag">{tag}</span>
-                      ))}
-                    </div>
-                    <button className="ps-cta" onClick={() => navigate(`/project/${p.id}`)}>
-                      <span>View case study</span>
-                      <span>→</span>
-                    </button>
-                  </div>
-                  <div className="ps-thumb">
-                    <Thumb
-                      color={p.color}
-                      label={`${p.short} — hero.png`}
-                      meta={`${p.index} · ${p.role}`}
-                      badge={p.status === 'draft' ? 'WIP' : undefined}
-                    />
-                  </div>
+            <div className="project-pair-row">
+              <div>
+                <div className="ps-eyebrow">
+                  <span className="ps-kind">{p.kind}</span>
+                  <span>{p.year}</span>
                 </div>
-              ))}
+                <h2 className="ps-title">{p.title}</h2>
+                <p className="ps-summary">{p.summary}</p>
+                <div className="ps-tags">
+                  {p.tags.map((tag) => (
+                    <span key={tag} className="ps-tag">{tag}</span>
+                  ))}
+                </div>
+                <button className="ps-cta" onClick={() => openProject(p.id)}>
+                  <span>View case study</span>
+                  <span>→</span>
+                </button>
+              </div>
+              <div
+                className="ps-thumb"
+                onClick={() => openProject(p.id)}
+                role="button"
+                tabIndex={0}
+                style={{ cursor: 'pointer' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    openProject(p.id)
+                  }
+                }}
+              >
+                <Thumb
+                  color={p.color}
+                  label={`${p.short} — hero.png`}
+                  meta={p.role}
+                  badge={p.status === 'draft' ? 'WIP' : undefined}
+                />
+              </div>
             </div>
           </div>
         </section>
       ))}
 
       <section
-        ref={(el) => { slideRefs.current[pairs.length + 1] = el }}
+        ref={(el) => { slideRefs.current[projects.length + 1] = el }}
         className="snap footer-slide"
       >
         <Footer />
