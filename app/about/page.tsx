@@ -5,7 +5,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
-import { projects } from '@/lib/data'
+import { visibleProjects } from '@/lib/data'
 
 type TimelineEntry = {
   year: string
@@ -319,7 +319,7 @@ export default function AboutPage() {
             View all selected work
             <span className="back-cta-arrow" aria-hidden="true">→</span>
           </span>
-          <span className="back-cta-meta mono">{projects.length} projects · 2021 — 2026</span>
+          <span className="back-cta-meta mono">{visibleProjects.length} projects · 2021 — 2026</span>
         </button>
       </section>
 

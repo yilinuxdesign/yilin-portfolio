@@ -10,8 +10,9 @@ import Footer from '@/components/Footer'
 import Thumb from '@/components/Thumb'
 import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
-import { CheckDepositHero, CheckDepositScreens } from '@/components/detail/CheckDeposit'
-import { projects, getProject, getNextProject, shiftColor, quoteFor } from '@/lib/data'
+import { CheckDepositHero, CheckDepositCaptureFlow, CheckDepositScreens } from '@/components/detail/CheckDeposit'
+import { CardSpendResearch } from '@/components/detail/CardSpend'
+import { projects, visibleProjects, getProject, getNextProject, getPrevProject, shiftColor, quoteFor } from '@/lib/data'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -20,13 +21,15 @@ export default function ProjectPage() {
   const rawId = Array.isArray(params.id) ? params.id[0] : params.id
   const id = rawId ?? ''
   const project = getProject(id) ?? projects[0]
-  const projectIdx = projects.findIndex((p) => p.id === project.id)
+  const projectIdx = Math.max(0, visibleProjects.findIndex((p) => p.id === project.id))
   const next = getNextProject(project.id)
+  const prev = getPrevProject(project.id)
 
   const { navigate } = useCurtain()
   const [resumeOpen, setResumeOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const isCheckDeposit = project.id === 'check-deposit'
+  const isCardSpend = project.id === 'card-spend'
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -93,7 +96,7 @@ export default function ProjectPage() {
           ← <span>Back to work</span>
         </button>
         <div className="detail-eyebrow">
-          {project.index} · {project.kind} · {project.year}
+          {project.kind} · {project.year}
         </div>
         <h1 className="detail-title">{project.title}</h1>
         <p className="detail-summary">{project.summary}</p>
@@ -198,13 +201,43 @@ export default function ProjectPage() {
 
       {/* Visual placeholders */}
       {isCheckDeposit ? (
-        <section className="container" style={{ paddingTop: 100 }}>
-          <div className="section-label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)' }}>
-            <h2>The screens</h2>
-            <span className="count">capture · review · recover</span>
-          </div>
-          <CheckDepositScreens />
-        </section>
+        <>
+          <section className="container" style={{ paddingTop: 100 }}>
+            <div className="section-label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)' }}>
+              <h2>The auto-capture sequence</h2>
+              <span className="count">front · flip · back · done</span>
+            </div>
+            <CheckDepositCaptureFlow />
+          </section>
+          <section className="container" style={{ paddingTop: 100 }}>
+            <div className="section-label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)' }}>
+              <h2>The screens</h2>
+              <span className="count">review · recover · confirm</span>
+            </div>
+            <CheckDepositScreens />
+          </section>
+        </>
+      ) : isCardSpend ? (
+        <>
+          <section className="container" style={{ paddingTop: 100 }}>
+            <div className="section-label" style={{ marginBottom: 'clamp(32px, 5vh, 56px)' }}>
+              <h2>The prototype</h2>
+              <span className="count">live · tap through the flow</span>
+            </div>
+            <div className="reveal" style={{ display: 'flex', justifyContent: 'center' }}>
+              <iframe
+                src="/spend/Spend%20Summary.html?embed=1"
+                title="Spend Summary interactive prototype"
+                loading="lazy"
+                style={{ width: '100%', maxWidth: 440, height: 900, border: 0, borderRadius: 12, background: 'transparent', colorScheme: 'light' }}
+              />
+            </div>
+            <p style={{ textAlign: 'center', marginTop: 18, fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--fg-muted)' }}>
+              Interactive — select a card, filter by period, statement or category, then drill into a category and a single transaction.
+            </p>
+          </section>
+          <CardSpendResearch />
+        </>
       ) : (
         <section className="container" style={{ paddingTop: 100 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
@@ -242,25 +275,34 @@ export default function ProjectPage() {
         </div>
       </section>
 
-      {/* Next project */}
-      <section
-        className="container next-project"
-        onClick={() => navigate(`/project/${next.id}`)}
-        style={{ cursor: 'pointer' }}
-      >
-        <div className="hero-eyebrow" style={{ margin: 0 }}>
-          <span>Next case study →</span>
-        </div>
-        <div className="work-row" style={{ borderBottom: 0, cursor: 'pointer', paddingBottom: 80 }}>
-          <span className="row-index">{next.index}</span>
-          <h3 className="row-title">{next.title}</h3>
-          <div className="row-meta">
-            <span className="industry">{next.kind}</span>
-            <span>{next.tags.join(' · ')}</span>
-          </div>
-          <span className="row-year">{next.year}</span>
-          <span className="row-arrow">→</span>
-        </div>
+      {/* Prev / Next case study */}
+      <section className="container cs-nav">
+        <button
+          type="button"
+          className="cs-card cs-card--prev"
+          onClick={() => navigate(`/project/${prev.id}`)}
+        >
+          <span className="cs-card-eyebrow mono">← Previous case study</span>
+          <span className="cs-card-headwrap">
+            <span className="cs-card-title">
+              <span className="cs-card-arrow" aria-hidden="true">←</span>
+              {prev.title.split('—')[0].trim()}
+            </span>
+          </span>
+        </button>
+        <button
+          type="button"
+          className="cs-card cs-card--next"
+          onClick={() => navigate(`/project/${next.id}`)}
+        >
+          <span className="cs-card-eyebrow mono">Next case study →</span>
+          <span className="cs-card-headwrap">
+            <span className="cs-card-title">
+              {next.title.split('—')[0].trim()}
+              <span className="cs-card-arrow" aria-hidden="true">→</span>
+            </span>
+          </span>
+        </button>
       </section>
 
       <Footer />

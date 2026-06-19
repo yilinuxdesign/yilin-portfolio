@@ -153,6 +153,13 @@ body {
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   border-bottom: 1px solid var(--rule-soft);
+  transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.35s ease;
+  will-change: transform;
+}
+.nav.nav-mini {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -428,16 +435,29 @@ body {
   color: var(--fg-faint); margin-bottom: 8px;
 }
 .footer-email-link {
+  /* button reset */
+  appearance: none; background: transparent; border: 0; padding: 0; margin: 0;
+  text-align: left; cursor: pointer;
+  /* layout */
   display: inline-flex; align-items: baseline; gap: 16px;
   font-family: var(--font-ui); font-size: clamp(15px, 1.1vw, 17px);
-  color: var(--fg); text-decoration: none; letter-spacing: -0.015em;
+  color: var(--fg); text-decoration: none; letter-spacing: -0.005em;
 }
-.footer-email-link:hover { color: var(--accent); }
+.footer-email-addr { /* email text is static — no hover/active styling */ }
 .footer-copy-state {
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--fg-faint);
   padding: 4px 10px; border: 1px solid var(--rule); border-radius: 999px;
+  transition: all 0.25s ease;
 }
+.footer-email-link:hover .footer-copy-state {
+  color: white; background: var(--accent); border-color: var(--accent);
+}
+.footer-email-link.is-copied .footer-copy-state {
+  color: white; background: oklch(0.55 0.14 145); border-color: oklch(0.55 0.14 145);
+  transform: scale(1.06);
+}
+.footer-email-link:active .footer-copy-state { transform: scale(0.96); }
 .footer-quick { display: flex; gap: 10px; align-items: center; }
 .footer-info { display: flex; flex-direction: column; gap: 0; }
 .footer-info-row {
@@ -736,15 +756,24 @@ html.snap-edges {
 }
 .snap { scroll-margin-top: 72px; display: flex; flex-direction: column; justify-content: center; position: relative; }
 .snap.hero, .snap.footer-slide { min-height: 100vh; scroll-snap-align: start; }
-.snap.project-pair-slide { padding-top: clamp(60px, 9vh, 120px); padding-bottom: clamp(60px, 9vh, 120px); }
-.snap.project-pair-slide:first-of-type { min-height: 100vh; scroll-snap-align: start; justify-content: center; }
+/* Each project takes ~62vh — so when you snap to one, the next peeks below */
+.snap.project-row-slide {
+  min-height: 62vh; scroll-snap-align: start; scroll-margin-top: 72px;
+  display: flex; align-items: center;
+  padding-top: clamp(20px, 2.5vh, 40px); padding-bottom: clamp(20px, 2.5vh, 40px);
+}
 .snap.footer { justify-content: flex-end; }
 
 /* Slide dot nav */
 .slide-dots {
   position: fixed; right: clamp(16px, 2vw, 32px); top: 50%;
   transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 60;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
+.slide-dots.hidden {
+  opacity: 0; pointer-events: none; transform: translateY(-50%) translateX(12px);
+}
+.slide-dots.visible { opacity: 1; pointer-events: auto; }
 .slide-dot {
   position: relative; width: 24px; height: 18px;
   display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -821,6 +850,113 @@ html.snap-edges {
 /* ────────── Reveal on scroll ────────── */
 .reveal { opacity: 0; transform: translateY(20px); }
 .reveal.in { opacity: 1; transform: translateY(0); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* ── Usability testing findings (card-spend case study) ── */
+.ut-meta { border-top: 1px solid var(--rule); }
+.ut-meta-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule-soft);
+}
+.ut-meta-k {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--fg-faint);
+}
+.ut-meta-v { font-family: var(--font-body); font-size: 14px; color: var(--fg); text-align: right; }
+.ut-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 1.6vw, 24px); }
+@media (max-width: 1000px) { .ut-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .ut-grid { grid-template-columns: 1fr; } }
+.ut-card {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: clamp(20px, 2.2vw, 30px);
+  border: 1px solid var(--rule); border-radius: 10px;
+  background: color-mix(in oklab, var(--fg) 2.5%, transparent);
+}
+.ut-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em;
+  text-transform: uppercase; font-weight: 600;
+}
+.ut-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ut-title {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: clamp(19px, 1.7vw, 24px); line-height: 1.1;
+  letter-spacing: var(--display-tracking); color: var(--fg); margin: 0;
+}
+.ut-body {
+  font-family: var(--font-body); font-size: 14.5px; line-height: 1.55;
+  color: var(--fg-muted); margin: 0; text-wrap: pretty;
+}
+.ut-quotes {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.5vw, 36px); margin-top: clamp(28px, 4vh, 52px);
+}
+@media (max-width: 760px) { .ut-quotes { grid-template-columns: 1fr; } }
+.ut-quote {
+  margin: 0; padding: clamp(24px, 2.6vw, 36px);
+  border-left: 2px solid var(--accent); background: var(--accent-bg);
+  border-radius: 0 8px 8px 0; display: flex; flex-direction: column; gap: 14px;
+}
+.ut-quote-on {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--accent);
+}
+.ut-quote-text {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: clamp(18px, 1.7vw, 24px); line-height: 1.32;
+  letter-spacing: var(--display-tracking); color: var(--fg); margin: 0; text-wrap: pretty;
+}
+.ut-quote-who {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--fg-faint); font-style: normal;
+}
+
+/* ── Prev / Next case-study nav (detail page footer) ── */
+.cs-nav {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 1.8vw, 26px); margin: clamp(40px, 6vh, 80px) 0 60px;
+}
+.cs-card {
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  gap: clamp(20px, 3vw, 40px); min-height: clamp(180px, 22vw, 260px);
+  padding: clamp(28px, 3vw, 48px);
+  background: var(--fg); color: var(--bg); border-radius: 12px;
+  text-decoration: none; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cs-card:hover { transform: translateY(-2px); }
+.cs-card::before {
+  content: ""; position: absolute; inset: 0; background: var(--accent);
+  transform: translateX(-101%);
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1); z-index: 0;
+}
+.cs-card--prev::before { transform: translateX(101%); }
+.cs-card:hover::before { transform: translateX(0); }
+.cs-card > * { position: relative; z-index: 1; }
+.cs-card--next { text-align: right; align-items: flex-end; }
+.cs-card-eyebrow {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in oklab, var(--bg) 70%, transparent);
+}
+.cs-card-headwrap { margin-top: auto; display: flex; flex-direction: column; gap: clamp(8px, 1vw, 14px); }
+.cs-card-title {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: clamp(24px, 2.7vw, 42px); letter-spacing: var(--display-tracking);
+  line-height: 1.05; display: inline-flex; align-items: center; gap: 14px;
+}
+.cs-card-arrow {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 1.1em; height: 1.1em; border-radius: 50%;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-ui); font-size: 0.5em; font-weight: 600;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.35s ease, color 0.35s ease;
+}
+.cs-card--next:hover .cs-card-arrow { transform: translateX(6px); }
+.cs-card--prev:hover .cs-card-arrow { transform: translateX(-6px); }
+.cs-card:hover .cs-card-arrow { background: var(--fg); color: var(--accent); }
+@media (max-width: 720px) {
+  .cs-nav { grid-template-columns: 1fr; }
+  .cs-card--next { text-align: left; align-items: flex-start; }
+  .cs-card--next .cs-card-title { flex-direction: row-reverse; justify-content: flex-end; }
+}
 
 /* ────────── Utility ────────── */
 .txt-accent  { color: var(--accent); }

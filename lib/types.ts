@@ -14,6 +14,7 @@ export interface Project {
   role: string
   tags: string[]
   color: string
+  archived?: boolean
   status: 'draft' | 'shipped'
   summary: string
   problem: string

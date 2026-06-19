@@ -79,6 +79,7 @@ export const projects: Project[] = [
   {
     id: 'biller-search',
     index: '04',
+    archived: true,
     title: 'Transforming Biller Discovery with a More Intelligent Search Experience',
     short: 'Advanced Search',
     kind: 'Industry Work',
@@ -104,6 +105,7 @@ export const projects: Project[] = [
   {
     id: 'citi-app',
     index: '05',
+    archived: true,
     title: 'Refreshing Citi App Experience to Drive Mobile Adoption',
     short: 'Citi App Refresh',
     kind: 'Industry Work',
@@ -129,37 +131,50 @@ export const projects: Project[] = [
   {
     id: 'toyota-yui',
     index: '06',
-    title: 'Creating a voice-based multimodal car experience for Tokyo Olympics',
-    short: 'Toyota YUI',
+    title: 'Toyota Yui — A Voice-First AI Companion for an Autonomous Concept Car',
+    short: 'Toyota Yui',
     kind: 'Industry Work',
-    year: '2021',
-    role: 'Interaction Designer',
-    tags: ['Voice UI', 'Interaction Design', 'Localization'],
+    year: '2020',
+    role: 'Interaction Designer · Voice Prototyper',
+    tags: ['Voice UI', 'Multimodal Design', 'Localization'],
     color: 'oklch(0.45 0.10 290)',
     status: 'shipped',
     summary:
-      'Designing the voice and on-screen personality for Toyota\'s concept e-Palette shuttle — a mobility platform built for the (eventually-postponed) Tokyo Olympic Village.',
+      'Yui is Toyota\'s voice-first, multimodal in-car AI agent, paired with LQ — a SAE Level 4 autonomous concept vehicle. Built on a \'learn, grow, love\' principle, Yui builds an emotional bond between car and rider, and was bound for the Toyota Yui Project Tours at the 2020 Tokyo Olympics.',
     problem:
-      'Riders speaking six languages would share a single autonomous shuttle. The system needed to feel warm, predictable, and culturally appropriate, while handling fast multi-turn requests with no driver to intervene.',
+      'A 30-minute autonomous ride had to feel like a conversation with a friend, not a robot reading a list. Yui needed to lead by voice — the safest channel in a moving car — while orchestrating light, sound, scent and motion, adapting its content to each rider across three languages with no driver to step in.',
     approach:
-      'We wrote a personality bible, mapped 47 conversation flows across English / Japanese / French / Spanish / Mandarin / Korean, and ran Wizard-of-Oz sessions in a static mock shuttle on Toyota Research Institute\'s Los Altos campus.',
+      'I helped define the voice agent\'s UX requirements and multimodal behavior, translated writers\' scenarios into branching conversation flowcharts, and partnered with developers to build and QA working voice prototypes. I owned the Chinese demo end-to-end — authoring a localization guideline, tuning TTS with SSML, and running scenario QA to keep dialogue natural and within a listener\'s short-term memory.',
     outcome:
-      'Shipped to internal demo fleet and showcased at CES. Localization decisions and personality framework carried forward into Toyota\'s connected-services VUI standards.',
+      'Delivered fully-functional, localized voice demos in English, Japanese and Chinese — with three persona-driven paths and four coordinated sensory modalities — ahead of the April 2020 deadline. The public Olympic test-drive tours were postponed over safety concerns, and the UX deliverables remain under NDA.',
     metrics: [
-      { label: 'Languages supported', value: '6' },
-      { label: 'Conversation flows', value: '47' },
-      { label: 'WOZ sessions', value: '22' },
+      { label: 'Sensory modalities', value: '4', delta: 'sight · sound · smell · touch' },
+      { label: 'Localized languages', value: '3', delta: 'EN · JA · ZH' },
+      { label: 'Persona paths', value: '3', delta: 'branch on rider input' },
     ],
   },
 ]
+
+// Visible projects (archived ones are hidden from the home page but still
+// reachable by direct link / getProject).
+export const visibleProjects: Project[] = projects.filter((p) => !p.archived)
 
 export function getProject(id: string): Project | undefined {
   return projects.find((p) => p.id === id)
 }
 
 export function getNextProject(id: string): Project {
-  const idx = projects.findIndex((p) => p.id === id)
-  return projects[(idx + 1) % projects.length]
+  const idx = visibleProjects.findIndex((p) => p.id === id)
+  const i = idx < 0 ? 0 : idx
+  const len = visibleProjects.length
+  return visibleProjects[(i + 1 + len) % len]
+}
+
+export function getPrevProject(id: string): Project {
+  const idx = visibleProjects.findIndex((p) => p.id === id)
+  const i = idx < 0 ? 0 : idx
+  const len = visibleProjects.length
+  return visibleProjects[(i - 1 + len) % len]
 }
 
 export function shiftColor(oklchStr: string, delta: number): string {

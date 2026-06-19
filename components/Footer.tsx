@@ -9,8 +9,7 @@ export default function Footer() {
   const [copied, setCopied] = useState(false)
   const email = 'yilinuxdesign@gmail.com'
 
-  const copyEmail = (e: React.MouseEvent) => {
-    e.preventDefault()
+  const copyEmail = () => {
     navigator.clipboard?.writeText(email)
     setCopied(true)
     setTimeout(() => setCopied(false), 1800)
@@ -31,13 +30,17 @@ export default function Footer() {
 
         <div className="footer-meta-row">
           <div className="footer-email">
-            <div className="mono cell-label">Email — click to copy</div>
-            <a href={`mailto:${email}`} onClick={copyEmail} className="footer-email-link">
-              {email}
+            <button
+              type="button"
+              className={`footer-email-link ${copied ? 'is-copied' : ''}`}
+              onClick={copyEmail}
+              aria-label="Copy email address to clipboard"
+            >
+              <span className="footer-email-addr">{email}</span>
               <span className="footer-copy-state">
-                {copied ? 'Copied ✓' : 'or hit send →'}
+                {copied ? 'Copied ✓' : 'click to copy'}
               </span>
-            </a>
+            </button>
           </div>
           <div className="footer-quick">
             <a href={`mailto:${email}`} className="btn">Send an email →</a>

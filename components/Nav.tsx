@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCurtain } from './CurtainTransition'
 
-export default function Nav({ onResume }: { onResume: () => void }) {
+export default function Nav({ onResume, mini = false }: { onResume: () => void; mini?: boolean }) {
   const pathname = usePathname()
   const { navigate } = useCurtain()
 
@@ -14,7 +14,7 @@ export default function Nav({ onResume }: { onResume: () => void }) {
   ]
 
   return (
-    <nav className="nav">
+    <nav className={`nav ${mini ? 'nav-mini' : ''}`}>
       <div className="container nav-inner">
         <button
           className="nav-logo"

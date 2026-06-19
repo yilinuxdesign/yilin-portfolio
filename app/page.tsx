@@ -8,17 +8,19 @@ import SlideNav from '@/components/SlideNav'
 import Thumb from '@/components/Thumb'
 import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
-import { projects } from '@/lib/data'
+import { visibleProjects } from '@/lib/data'
 
 export default function HomePage() {
   const { navigate } = useCurtain()
   const [activeIdx, setActiveIdx] = useState(0)
+  const [dotsVisible, setDotsVisible] = useState(false)
+  const [navMini, setNavMini] = useState(false)
   const [resumeOpen, setResumeOpen] = useState(false)
   const slideRefs = useRef<(HTMLElement | null)[]>([])
 
   const slides = [
     { id: 'hero', label: 'Intro' },
-    ...projects.map((p) => ({ id: p.id, label: p.short })),
+    ...visibleProjects.map((p) => ({ id: p.id, label: p.short })),
     { id: 'footer', label: 'Get in touch' },
   ]
 
@@ -27,24 +29,60 @@ export default function HomePage() {
     return () => document.documentElement.classList.remove('snap-edges')
   }, [])
 
+  // Dots are visible only while a project is the primary thing on screen:
+  // once the first project reaches the top, and until the last project has
+  // mostly scrolled away.
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        let best: IntersectionObserverEntry | null = null
-        for (const e of entries) {
-          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
-            best = e
-          }
-        }
-        if (best !== null) {
-          const idx = slideRefs.current.indexOf((best as IntersectionObserverEntry).target as HTMLElement)
-          if (idx >= 0) setActiveIdx(idx)
-        }
-      },
-      { threshold: [0.4, 0.6, 0.8] }
-    )
-    slideRefs.current.forEach((el) => el && io.observe(el))
-    return () => io.disconnect()
+    const onScroll = () => {
+      const firstProject = slideRefs.current[1]
+      const lastProject = slideRefs.current[visibleProjects.length]
+      if (!firstProject || !lastProject) return
+      const firstTop = firstProject.getBoundingClientRect().top
+      const lastRect = lastProject.getBoundingClientRect()
+      const visibleFraction = lastRect.bottom / lastRect.height
+      setDotsVisible(firstTop <= 80 && visibleFraction > 0.7)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Active slide = whichever one contains the viewport anchor line (1/3 down).
+  useEffect(() => {
+    let raf: number | null = null
+    const compute = () => {
+      raf = null
+      const anchor = window.innerHeight * 0.33
+      let bestIdx = 0
+      slideRefs.current.forEach((el, i) => {
+        if (!el) return
+        const r = el.getBoundingClientRect()
+        if (r.top <= anchor && r.bottom > anchor) bestIdx = i
+      })
+      setActiveIdx(bestIdx)
+    }
+    const onScroll = () => { if (raf == null) raf = requestAnimationFrame(compute) }
+    compute()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      if (raf) cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  // Hide the nav once the hero has scrolled out; bring it back near the footer.
+  useEffect(() => {
+    const onScroll = () => {
+      const heroOut = window.scrollY > window.innerHeight * 0.85
+      const docBottom = document.documentElement.scrollHeight - window.innerHeight
+      const nearBottom = docBottom - window.scrollY < window.innerHeight * 0.4
+      setNavMini(heroOut && !nearBottom)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const scrollTo = (i: number) => {
@@ -56,13 +94,13 @@ export default function HomePage() {
 
   return (
     <div className="page" data-screen-label="Home">
-      <Nav onResume={() => setResumeOpen(true)} />
+      <Nav onResume={() => setResumeOpen(true)} mini={navMini} />
 
       <section ref={(el) => { slideRefs.current[0] = el }}>
         <Hero />
       </section>
 
-      {projects.map((p, i) => (
+      {visibleProjects.map((p, i) => (
         <section
           key={p.id}
           ref={(el) => { slideRefs.current[i + 1] = el }}
@@ -113,13 +151,13 @@ export default function HomePage() {
       ))}
 
       <section
-        ref={(el) => { slideRefs.current[projects.length + 1] = el }}
+        ref={(el) => { slideRefs.current[visibleProjects.length + 1] = el }}
         className="snap footer-slide"
       >
         <Footer />
       </section>
 
-      <SlideNav slides={slides} activeIdx={activeIdx} onDotClick={scrollTo} />
+      <SlideNav slides={slides} activeIdx={activeIdx} visible={dotsVisible} onDotClick={scrollTo} />
 
       {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
