@@ -913,7 +913,8 @@ html.snap-edges {
 /* ── Prev / Next case-study nav (detail page footer) ── */
 .cs-nav {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: clamp(14px, 1.8vw, 26px); margin: clamp(40px, 6vh, 80px) 0 60px;
+  gap: clamp(14px, 1.8vw, 26px);
+  max-width: 820px; margin: clamp(40px, 6vh, 80px) auto 60px;
 }
 .cs-card {
   position: relative; overflow: hidden; display: flex; flex-direction: column;
