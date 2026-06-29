@@ -917,6 +917,7 @@ html.snap-edges {
 }
 .cs-card {
   position: relative; overflow: hidden; display: flex; flex-direction: column;
+  align-items: center; text-align: center;
   gap: clamp(20px, 3vw, 40px); min-height: clamp(180px, 22vw, 260px);
   padding: clamp(28px, 3vw, 48px);
   background: var(--fg); color: var(--bg); border-radius: 12px;
@@ -931,7 +932,7 @@ html.snap-edges {
 .cs-card--prev::before { transform: translateX(101%); }
 .cs-card:hover::before { transform: translateX(0); }
 .cs-card > * { position: relative; z-index: 1; }
-.cs-card--next { text-align: right; align-items: flex-end; }
+.cs-card-headwrap { align-items: center; }
 .cs-card-eyebrow {
   font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: color-mix(in oklab, var(--bg) 70%, transparent);
@@ -954,8 +955,6 @@ html.snap-edges {
 .cs-card:hover .cs-card-arrow { background: var(--fg); color: var(--accent); }
 @media (max-width: 720px) {
   .cs-nav { grid-template-columns: 1fr; }
-  .cs-card--next { text-align: left; align-items: flex-start; }
-  .cs-card--next .cs-card-title { flex-direction: row-reverse; justify-content: flex-end; }
 }
 
 /* ────────── Utility ────────── */
