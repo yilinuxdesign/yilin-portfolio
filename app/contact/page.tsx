@@ -141,7 +141,7 @@ export default function ContactPage() {
         </form>
       </section>
 
-      <Footer />
+      <Footer onResume={() => setResumeOpen(true)} />
 
       {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>

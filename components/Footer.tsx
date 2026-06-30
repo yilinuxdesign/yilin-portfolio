@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useCurtain } from './CurtainTransition'
 
-export default function Footer() {
-  const { navigate } = useCurtain()
+export default function Footer({ onResume }: { onResume?: () => void }) {
   const [copied, setCopied] = useState(false)
   const email = 'yilinuxdesign@gmail.com'
 
@@ -44,7 +42,7 @@ export default function Footer() {
           </div>
           <div className="footer-quick">
             <a href={`mailto:${email}`} className="btn">Send an email →</a>
-            <button className="btn btn-ghost" onClick={() => navigate('/resume')}>
+            <button className="btn btn-ghost" onClick={onResume}>
               View résumé
             </button>
           </div>
