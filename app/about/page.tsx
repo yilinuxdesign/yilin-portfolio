@@ -136,6 +136,22 @@ export default function AboutPage() {
     return () => io.disconnect()
   }, [])
 
+  // Collapse the open card when clicking outside it (or pressing Escape).
+  useEffect(() => {
+    if (expandedExp === null && expandedEdu === null) return
+    const collapse = () => { setExpandedExp(null); setExpandedEdu(null) }
+    const onDown = (e: MouseEvent) => {
+      if (!(e.target as Element)?.closest?.('.cv-card.expanded')) collapse()
+    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') collapse() }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [expandedExp, expandedEdu])
+
   const experience = TIMELINE.filter((t) => !isEducation(t))
   const education = TIMELINE.filter(isEducation)
 
