@@ -110,24 +110,28 @@ export default function AboutPage() {
   const [resumeOpen, setResumeOpen] = useState(false)
   const [expandedExp, setExpandedExp] = useState<number | null>(null)
   const [expandedEdu, setExpandedEdu] = useState<number | null>(null)
+  // Track revealed cards in React state. The `in` class must live in the JSX
+  // className (not be added imperatively), otherwise a re-render from
+  // expand/collapse rewrites className and wipes it — making cards vanish.
+  const [revealed, setRevealed] = useState<Set<string>>(() => new Set())
 
   useEffect(() => {
-    const els = document.querySelectorAll('.reveal')
+    const reveal = (el: HTMLElement) => {
+      const k = el.dataset.rk
+      if (k) setRevealed((prev) => (prev.has(k) ? prev : new Set(prev).add(k)))
+    }
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add('in')
+          reveal(e.target as HTMLElement)
           io.unobserve(e.target)
         }
       }),
       { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
     )
-    els.forEach((el) => io.observe(el))
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.reveal').forEach((el) => {
-        const r = (el as HTMLElement).getBoundingClientRect()
-        if (r.top < window.innerHeight) el.classList.add('in')
-      })
+    document.querySelectorAll<HTMLElement>('.reveal[data-rk]').forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight) reveal(el)
+      else io.observe(el)
     })
     return () => io.disconnect()
   }, [])
@@ -193,7 +197,8 @@ export default function AboutPage() {
             return (
               <li
                 key={i}
-                className={`cv-card reveal ${isExpanded ? 'expanded' : ''}`}
+                data-rk={`exp-${i}`}
+                className={`cv-card reveal ${revealed.has(`exp-${i}`) ? 'in' : ''} ${isExpanded ? 'expanded' : ''}`}
                 onClick={handleClick}
                 role="button"
                 tabIndex={0}
@@ -246,7 +251,8 @@ export default function AboutPage() {
             return (
               <li
                 key={i}
-                className={`cv-card reveal ${isExpanded ? 'expanded' : ''}`}
+                data-rk={`edu-${i}`}
+                className={`cv-card reveal ${revealed.has(`edu-${i}`) ? 'in' : ''} ${isExpanded ? 'expanded' : ''}`}
                 onClick={handleClick}
                 role="button"
                 tabIndex={0}
