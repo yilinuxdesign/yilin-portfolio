@@ -931,6 +931,7 @@ html.snap-edges {
 .cs-card--prev::before { transform: translateX(101%); }
 .cs-card:hover::before { transform: translateX(0); }
 .cs-card > * { position: relative; z-index: 1; }
+.cs-card--prev { text-align: left; align-items: flex-start; }
 .cs-card--next { text-align: right; align-items: flex-end; }
 .cs-card-eyebrow {
   font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
