@@ -904,7 +904,8 @@ body {
 .cv-row-year {
   font-size: 10px;
   letter-spacing: 0.06em;
-  color: var(--fg-faint);
+  /* --fg-faint at 10px only reaches ~3.3:1; --fg-muted clears WCAG AA 4.5:1 */
+  color: var(--fg-muted);
   text-transform: uppercase;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1193,6 +1194,9 @@ html.snap-edges {
   font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: color-mix(in oklab, var(--bg) 70%, transparent);
 }
+/* On hover the tile background becomes the accent; full --bg keeps the
+   eyebrow above the WCAG AA 4.5:1 threshold (dimmed 70% drops to ~4:1). */
+.cs-card:hover .cs-card-eyebrow { color: var(--bg); }
 .cs-card-headwrap { margin-top: auto; display: flex; flex-direction: column; gap: clamp(8px, 1vw, 14px); }
 .cs-card-title {
   font-family: var(--font-display); font-weight: var(--display-weight);
