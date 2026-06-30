@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 type Row = { year: string; title: string; place: string; bullets?: string[] }
 
@@ -41,6 +42,9 @@ const EDUCATION: Row[] = [
 ]
 
 export default function ResumeModal({ onClose }: { onClose: () => void }) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
@@ -51,7 +55,12 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
     }
   }, [onClose])
 
-  return (
+  // Render through a portal to <body> so the fixed-position overlay isn't
+  // trapped by a transformed ancestor (the curtain/page wrapper), which would
+  // otherwise size it to the full document and push the card off-screen.
+  if (!mounted) return null
+
+  return createPortal(
     <div
       className="modal-bg"
       onClick={onClose}
@@ -121,7 +130,8 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
