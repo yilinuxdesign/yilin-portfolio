@@ -14,7 +14,7 @@ const DEFAULT_STATE = {
 function PhoneShell({ children }) {
   return (
     <div style={{ width: 372, flexShrink: 0 }}>
-      <div style={{ borderRadius: 46, padding: 11, background: "#0c0c0d", boxShadow: "0 40px 80px -34px rgba(0,0,0,0.55)" }}>
+      <div style={{ borderRadius: 46, padding: 11, background: "#0c0c0d" }}>
         <div style={{ position: "relative", borderRadius: 36, overflow: "hidden", background: "#fff", height: 760, display: "flex", flexDirection: "column", fontFamily: SS.FONT, color: SS.INK }}>
           <div style={{ position: "absolute", top: 9, left: "50%", transform: "translateX(-50%)", width: 108, height: 26, borderRadius: 14, background: "#0c0c0d", zIndex: 60 }} />
           {children}
