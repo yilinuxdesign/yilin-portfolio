@@ -113,17 +113,27 @@ export default function HomePage() {
                   <span className="ps-kind">{p.kind}</span>
                   <span>{p.year}</span>
                 </div>
-                <h2 className="ps-title">{p.title}</h2>
+                <h2
+                  className="ps-title ps-title-link"
+                  onClick={() => openProject(p.id)}
+                  role="button"
+                  tabIndex={0}
+                  style={{ cursor: 'pointer' }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      openProject(p.id)
+                    }
+                  }}
+                >
+                  {p.title}
+                </h2>
                 <p className="ps-summary">{p.summary}</p>
                 <div className="ps-tags">
                   {p.tags.map((tag) => (
                     <span key={tag} className="ps-tag">{tag}</span>
                   ))}
                 </div>
-                <button className="ps-cta" onClick={() => openProject(p.id)}>
-                  <span>View case study</span>
-                  <span>→</span>
-                </button>
               </div>
               <div
                 className="ps-thumb"

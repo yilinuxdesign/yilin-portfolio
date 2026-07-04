@@ -1077,6 +1077,12 @@ html.snap-edges {
   font-size: clamp(32px, 4.5vw, 64px); line-height: 1.04;
   letter-spacing: var(--display-tracking); margin: 0 0 24px; text-wrap: balance;
 }
+.ps-title-link {
+  color: var(--fg); transition: color 0.25s ease;
+  text-decoration-color: transparent;
+}
+.ps-title-link:hover { color: var(--accent); }
+.ps-title-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 .ps-summary {
   font-family: var(--font-body); font-size: clamp(15px, 1.1vw, 17px);
   line-height: 1.55; color: var(--fg-muted); margin: 0 0 32px; max-width: 52ch;
