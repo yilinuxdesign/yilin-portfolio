@@ -1,5 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+
 interface Slide {
   id: string
   label: string
@@ -13,9 +16,18 @@ interface SlideNavProps {
 }
 
 export default function SlideNav({ slides, activeIdx, visible, onDotClick }: SlideNavProps) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
   // Dots represent the project slides only — drop the hero (first) and footer (last).
   const projectSlides = slides.slice(1, -1)
-  return (
+
+  // Render through a portal to <body> (like the design) so the fixed-position
+  // dots anchor to the viewport instead of a transformed ancestor (the
+  // curtain/page wrapper), which would otherwise break position: fixed.
+  if (!mounted) return null
+
+  return createPortal(
     <div className={`slide-dots ${visible ? 'visible' : 'hidden'}`} aria-label="Page navigation">
       {projectSlides.map((s, i) => {
         const realIdx = i + 1
@@ -34,6 +46,7 @@ export default function SlideNav({ slides, activeIdx, visible, onDotClick }: Sli
           </button>
         )
       })}
-    </div>
+    </div>,
+    document.body
   )
 }
