@@ -123,6 +123,14 @@ export default function ProjectPage() {
           <div className="reveal" style={{ marginTop: 'clamp(40px, 6vh, 64px)' }}>
             <CheckDepositHero />
           </div>
+        ) : project.heroImage ? (
+          <div className="hero-img reveal" style={{ aspectRatio: '16 / 9', borderRadius: 12, overflow: 'hidden', background: project.color }}>
+            <img
+              src={project.heroImage}
+              alt={`${project.short} — key screens`}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
         ) : (
           <div className="hero-img reveal">
             <Thumb

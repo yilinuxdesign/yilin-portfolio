@@ -36,6 +36,7 @@ export const projects: Project[] = [
     role: 'Senior Product Designer',
     tags: ['Data Viz', 'Mobile Design', 'Personal Finance'],
     color: 'oklch(0.50 0.15 175)',
+    heroImage: '/assets/spend-hero.png',
     status: 'draft',
     summary:
       'An end-of-cycle spend summary for credit-card customers — turning a wall of transactions into a glanceable narrative about where money went, how it compares to last month, and what\'s worth a second look.',

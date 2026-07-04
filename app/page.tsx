@@ -148,12 +148,23 @@ export default function HomePage() {
                   }
                 }}
               >
-                <Thumb
-                  color={p.color}
-                  label={`${p.short} — hero.png`}
-                  meta={p.role}
-                  badge={p.status === 'draft' ? 'WIP' : undefined}
-                />
+                {p.heroImage ? (
+                  <div className="thumb" style={{ padding: 0, overflow: 'hidden', background: p.color }}>
+                    <img
+                      src={p.heroImage}
+                      alt={`${p.short} — key screens`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                    {p.status === 'draft' && <div className="thumb-badge">WIP</div>}
+                  </div>
+                ) : (
+                  <Thumb
+                    color={p.color}
+                    label={`${p.short} — hero.png`}
+                    meta={p.role}
+                    badge={p.status === 'draft' ? 'WIP' : undefined}
+                  />
+                )}
               </div>
             </div>
           </div>

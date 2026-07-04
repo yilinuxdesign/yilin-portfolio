@@ -15,6 +15,7 @@ export interface Project {
   tags: string[]
   color: string
   archived?: boolean
+  heroImage?: string
   status: 'draft' | 'shipped'
   summary: string
   problem: string
