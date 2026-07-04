@@ -48,7 +48,6 @@ function App() {
     filtered: window.FilteredResults,
     category: window.CategoryDetail,
     txn: window.TransactionDetail,
-    error: window.ErrorState,
   };
   const Screen = SCREENS[route] || window.Landing;
 
@@ -85,7 +84,7 @@ function App() {
         {SheetComp && <SheetComp ctx={ctx} />}
       </PhoneShell>
       <div style={{ display: "flex", gap: 10, marginTop: EMBED ? 20 : 26, flexWrap: "wrap", justifyContent: "center" }}>
-        {[["Landing","landing"],["Filter","filter"],["Results","filtered"],["Category","category"],["Transaction","txn"],["Error state","error"]].map(([l, r]) => (
+        {[["Landing","landing"],["Filter","filter"],["Results","filtered"],["Category","category"],["Transaction","txn"]].map(([l, r]) => (
           <button key={r} onClick={() => { setStack([]); setRoute(r); setSheet(null); }} style={{ padding: "7px 14px", borderRadius: 16, border: "1px solid #aab0b8", background: route === r ? "#0d5fa6" : "#fff", color: route === r ? "#fff" : "#3a4049", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: SS.FONT }}>{l}</button>
         ))}
       </div>

@@ -66,7 +66,7 @@ function Chip({ label, active, onClick, block }) {
   return (
     <button onClick={onClick} style={{
       padding: "7px 14px", borderRadius: 18, fontSize: 12.5, fontWeight: 600, cursor: "pointer",
-      fontFamily: SS.FONT, whiteSpace: "nowrap", flex: block ? 1 : "none",
+      fontFamily: SS.FONT, whiteSpace: "nowrap", flex: block ? 1 : "none", scrollSnapAlign: "start",
       border: `1px solid ${SS.FILL}`,
       background: active ? SS.FILL : "#fff", color: active ? "#fff" : SS.FILL,
     }}>{label}</button>
@@ -74,13 +74,19 @@ function Chip({ label, active, onClick, block }) {
 }
 
 // ── Category row ──
-function CategoryRow({ cat, onClick }) {
+function CategoryRow({ cat, onClick, tile }) {
   const credit = String(cat.amount).startsWith("-");
   return (
     <button onClick={onClick} style={{
       display: "flex", alignItems: "center", gap: 12, width: "100%", textAlign: "left",
-      padding: "14px 4px 14px 0", background: "none", border: "none",
       cursor: "pointer", fontFamily: SS.FONT,
+      ...(tile ? {
+        background: "#fff", border: `1px solid ${SS.LINE}`, borderRadius: 10,
+        padding: "13px 12px 13px 14px", marginBottom: 10,
+      } : {
+        background: "none", border: "none", borderBottom: `1px solid ${SS.LINE}`,
+        padding: "14px 4px 14px 0",
+      }),
     }}>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
@@ -95,12 +101,60 @@ function CategoryRow({ cat, onClick }) {
           <div style={{ height: "100%", width: `${Math.min(100, cat.pct)}%`, background: cat.color, borderRadius: 2 }} />
         </div>
       </div>
-      <IconChevR />
+      <IconChevR c={SS.LINK} />
     </button>
+  );
+}
+
+// ── Horizontally scrollable row (drag + wheel, scrollbar hidden) ──
+function HScroll({ children, style }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const el = ref.current; if (!el) return;
+    let down = false, moved = false, startX = 0, startL = 0, snapTimer = 0;
+    // smooth-snap to the nearest chip's left edge
+    const snapToNearest = () => {
+      const pad = 16;
+      const target = el.scrollLeft + pad;
+      let best = null, bestD = Infinity;
+      for (const ch of el.children) {
+        const d = Math.abs(ch.offsetLeft - target);
+        if (d < bestD) { bestD = d; best = ch; }
+      }
+      if (best) { el.style.scrollBehavior = "smooth"; el.scrollTo({ left: best.offsetLeft - pad }); }
+    };
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && el.scrollWidth > el.clientWidth) {
+        el.style.scrollBehavior = "auto"; el.scrollLeft += e.deltaY; e.preventDefault();
+        clearTimeout(snapTimer); snapTimer = setTimeout(snapToNearest, 120);
+      }
+    };
+    const onDown = (e) => { down = true; moved = false; startX = e.clientX; startL = el.scrollLeft; el.style.scrollSnapType = "none"; el.style.scrollBehavior = "auto"; };
+    const onMove = (e) => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 4) moved = true; el.scrollLeft = startL - dx; };
+    const onUp = () => { if (!down) return; down = false; el.style.scrollSnapType = "x proximity"; snapToNearest(); };
+    const onClick = (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    el.addEventListener("click", onClick, true);
+    return () => {
+      clearTimeout(snapTimer);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      el.removeEventListener("click", onClick, true);
+    };
+  }, []);
+  return (
+    <div ref={ref} className="noscroll" style={{ display: "flex", flexWrap: "nowrap", overflowX: "auto", WebkitOverflowScrolling: "touch", cursor: "grab", scrollSnapType: "x proximity", scrollBehavior: "auto", scrollPaddingLeft: 16, ...style }}>
+      {children}
+    </div>
   );
 }
 
 Object.assign(window, {
   SS, IconChevL, IconChevR, IconChevDown, IconClose, IconInfo, IconWarn,
-  StatusBar, NavBar, Chip, CategoryRow,
+  StatusBar, NavBar, Chip, CategoryRow, HScroll,
 });

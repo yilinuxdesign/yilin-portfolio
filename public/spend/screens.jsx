@@ -40,18 +40,24 @@ function Landing({ ctx }) {
     <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "#fff", minHeight: 0 }}>
       <window.NavBar title="Spend Summary" onBack={() => ctx.go("home")} right="Filter" onRight={() => ctx.go("filter")} />
       <CardRow ctx={ctx} />
-      <div style={{ display: "flex", gap: 8, overflowX: "auto", padding: "0 16px 12px", flexShrink: 0 }} className="noscroll">
+      <window.HScroll style={{ gap: 8, padding: "0 16px 12px", flexShrink: 0, maxWidth: "100%" }}>
         {S.periods.map((p) => (
           <window.Chip key={p} label={p} active={ctx.state.period === p && ctx.state.mode === "period"} onClick={() => ctx.set({ period: p, mode: "period" })} />
         ))}
-      </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 24px", minHeight: 0 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "10px 0 12px", borderBottom: `1px solid ${SS.LINE}` }}>
-          <div><div style={{ fontSize: 12, color: SS.GRAY }}>Total</div><div style={{ fontSize: 22, fontWeight: 700, color: SS.INK }}>{S.total.pct}</div></div>
-          <div style={{ textAlign: "right" }}><div style={{ fontSize: 12, color: SS.GRAY }}>{S.total.txns}</div><div style={{ fontSize: 22, fontWeight: 700, color: SS.INK }}>{S.total.amount}</div></div>
+      </window.HScroll>
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 24px", minHeight: 0, background: SS.BG }}>
+        <div style={{ padding: "16px 4px 14px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <span style={{ fontSize: 12, color: SS.GRAY }}>Total</span>
+            <span style={{ fontSize: 12, color: SS.GRAY }}>{S.total.txns}</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 3 }}>
+            <span style={{ fontSize: 22, fontWeight: 700, color: SS.INK }}>{S.total.pct}</span>
+            <span style={{ fontSize: 22, fontWeight: 700, color: SS.INK }}>{S.total.amount}</span>
+          </div>
         </div>
         {S.categories.map((c) => (
-          <window.CategoryRow key={c.name} cat={c} onClick={() => ctx.openCategory(c)} />
+          <window.CategoryRow key={c.name} cat={c} tile onClick={() => ctx.openCategory(c)} />
         ))}
         <Disclaimer />
       </div>
@@ -148,11 +154,17 @@ function FilteredResults({ ctx }) {
           </span>
         ))}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "10px 16px", background: "#e9ebee" }}>
-        <div><div style={{ fontSize: 11, color: SS.GRAY }}>Total</div><div style={{ fontSize: 20, fontWeight: 700, color: SS.INK }}>{S.total.pct}</div></div>
-        <div style={{ textAlign: "right" }}><div style={{ fontSize: 11, color: SS.GRAY }}>{S.total.txns}</div><div style={{ fontSize: 20, fontWeight: 700, color: SS.INK }}>{S.total.amount}</div></div>
-      </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: "12px 16px 24px", minHeight: 0 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 24px", minHeight: 0 }}>
+        <div style={{ padding: "10px 0 14px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <span style={{ fontSize: 11, color: SS.GRAY }}>Total</span>
+            <span style={{ fontSize: 11, color: SS.GRAY }}>{S.total.txns}</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 3 }}>
+            <span style={{ fontSize: 20, fontWeight: 700, color: SS.INK }}>{S.total.pct}</span>
+            <span style={{ fontSize: 20, fontWeight: 700, color: SS.INK }}>{S.total.amount}</span>
+          </div>
+        </div>
         {cats.map((c) => (
           <div key={c.name} style={{ background: "#fff", borderRadius: 8, boxShadow: "0 1px 4px rgba(0,0,0,0.07)", marginBottom: 10, padding: "0 12px" }}>
             <window.CategoryRow cat={c} onClick={() => ctx.openCategory(c)} />
