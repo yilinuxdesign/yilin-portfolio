@@ -71,9 +71,9 @@ function FilterScreen({ ctx }) {
   const st = ctx.state;
   const card = { background: "#fff", borderRadius: 8, padding: "14px 14px 16px", marginBottom: 14 };
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", background: SS.BG, minHeight: 0 }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "#fff", minHeight: 0 }}>
       <window.NavBar title="Filter" onBack={() => ctx.go("landing")} />
-      <div style={{ flex: 1, overflowY: "auto", padding: "8px 14px 24px", minHeight: 0 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px 14px 24px", minHeight: 0, background: SS.BG }}>
         <div style={card}>
           <div style={{ fontSize: 13.5, fontWeight: 700, color: SS.INK, marginBottom: 10 }}>Time period</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
@@ -145,7 +145,7 @@ function FilteredResults({ ctx }) {
   if (cats.length === 0) return <EmptyState ctx={ctx} chips={activeFilters} />;
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", background: SS.BG, minHeight: 0 }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "#fff", minHeight: 0 }}>
       <window.NavBar title="Filter Results" onBack={() => ctx.go("filter")} right="Cancel" onRight={() => ctx.go("landing")} />
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", padding: "0 16px 10px", flexShrink: 0 }}>
         {activeFilters.map((f, i) => (
@@ -154,7 +154,7 @@ function FilteredResults({ ctx }) {
           </span>
         ))}
       </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 24px", minHeight: 0 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 24px", minHeight: 0, background: SS.BG }}>
         <div style={{ padding: "10px 0 14px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
             <span style={{ fontSize: 11, color: SS.GRAY }}>Total</span>
