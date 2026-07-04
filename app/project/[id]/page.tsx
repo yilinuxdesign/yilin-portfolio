@@ -92,9 +92,6 @@ export default function ProjectPage() {
 
       {/* Detail header */}
       <section className="container detail-hero">
-        <button className="detail-back" onClick={() => navigate('/')}>
-          ← <span>Back to work</span>
-        </button>
         <div className="detail-eyebrow">
           {project.kind} · {project.year}
         </div>
