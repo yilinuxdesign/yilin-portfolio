@@ -78,15 +78,18 @@ function App() {
         <div style={{ fontSize: 13, color: "#7b828b", marginTop: 6, fontFamily: SS.FONT }}>Interactive prototype — tap through the filter & drill-down flow</div>
       </div>
       )}
-      <PhoneShell>
-        <window.StatusBar />
-        <Screen ctx={ctx} />
-        {SheetComp && <SheetComp ctx={ctx} />}
-      </PhoneShell>
-      <div style={{ display: "flex", gap: 10, marginTop: EMBED ? 20 : 26, flexWrap: "wrap", justifyContent: "center" }}>
-        {[["Landing","landing"],["Filter","filter"],["Results","filtered"],["Category","category"],["Transaction","txn"]].map(([l, r]) => (
-          <button key={r} onClick={() => { setStack([]); setRoute(r); setSheet(null); }} style={{ padding: "7px 14px", borderRadius: 16, border: "1px solid #aab0b8", background: route === r ? "#0d5fa6" : "#fff", color: route === r ? "#fff" : "#3a4049", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: SS.FONT }}>{l}</button>
-        ))}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: EMBED ? 14 : 24 }}>
+        {/* page-switch chips — stacked vertically on the left */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, width: 116, flexShrink: 0, paddingTop: 8 }}>
+          {[["Landing","landing"],["Filter","filter"],["Results","filtered"],["Category","category"],["Transaction","txn"]].map(([l, r]) => (
+            <button key={r} onClick={() => { setStack([]); setRoute(r); setSheet(null); }} style={{ width: "100%", padding: "8px 12px", borderRadius: 16, border: "1px solid #aab0b8", background: route === r ? "#0d5fa6" : "#fff", color: route === r ? "#fff" : "#3a4049", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: SS.FONT, textAlign: "left" }}>{l}</button>
+          ))}
+        </div>
+        <PhoneShell>
+          <window.StatusBar {...(route === "txn" ? { bg: "#3f7cb0", fg: "#fff" } : {})} />
+          <Screen ctx={ctx} />
+          {SheetComp && <SheetComp ctx={ctx} />}
+        </PhoneShell>
       </div>
     </div>
   );

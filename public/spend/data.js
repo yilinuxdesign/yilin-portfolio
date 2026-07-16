@@ -60,21 +60,43 @@ window.SPEND = {
     count: "14 transactions",
     groups: [
       { date: "Jul 14, 2025", items: [
-        { merchant: "SEPHORA", amount: "$146.10" },
-        { merchant: "TARGET", amount: "$6.41" },
+        { merchant: "SEPHORA", amount: "$146.10", domain: "sephora.com" },
+        { merchant: "TARGET", amount: "$6.41", domain: "target.com" },
       ]},
       { date: "Jul 13, 2025", items: [
-        { merchant: "American Airlines", amount: "$1,249.99" },
-        { merchant: "ShopRite", amount: "$15.99" },
-        { merchant: "HYATT HOTELS AND RESORTS HYATT REGENCY GREENVILLE", amount: "$23,174.50" },
+        { merchant: "American Airlines", amount: "$1,249.99", domain: "aa.com" },
+        { merchant: "ShopRite", amount: "$15.99", domain: "shoprite.com" },
+        { merchant: "HYATT HOTELS AND RESORTS HYATT REGENCY GREENVILLE", amount: "$23,174.50", domain: "hyatt.com" },
       ]},
       { date: "Jul 12, 2025", items: [
-        { merchant: "REFUND - APPLE iTUNES", amount: "-$9.99", credit: true },
-        { merchant: "Ginnie Springs Outdoors", amount: "$34.00" },
-        { merchant: "McDonald's", amount: "$68.75" },
+        { merchant: "REFUND - APPLE iTUNES", amount: "-$9.99", credit: true, domain: "apple.com" },
+        { merchant: "Ginnie Springs Outdoors", amount: "$34.00", domain: "ginniespringsoutdoors.com" },
+        { merchant: "McDonald's", amount: "$68.75", domain: "mcdonalds.com" },
       ]},
       { date: "Jul 11, 2025", items: [
-        { merchant: "COSTCO", amount: "$70.00" },
+        { merchant: "COSTCO", amount: "$70.00", domain: "costco.com" },
+        { merchant: "Amazon", amount: "$52.30", domain: "amazon.com" },
+        { merchant: "Walmart", amount: "$88.14", domain: "walmart.com" },
+      ]},
+      { date: "Jul 10, 2025", items: [
+        { merchant: "Best Buy", amount: "$219.99", domain: "bestbuy.com" },
+        { merchant: "IKEA", amount: "$134.97", domain: "ikea.com" },
+        { merchant: "Nike", amount: "$129.00", domain: "nike.com" },
+      ]},
+      { date: "Jul 9, 2025", items: [
+        { merchant: "The Home Depot", amount: "$76.42", domain: "homedepot.com" },
+        { merchant: "Etsy", amount: "$41.20", domain: "etsy.com" },
+        { merchant: "REFUND - Macy's", amount: "-$24.99", credit: true, domain: "macys.com" },
+      ]},
+      { date: "Jul 8, 2025", items: [
+        { merchant: "Trader Joe's", amount: "$63.85", domain: "traderjoes.com" },
+        { merchant: "CVS Pharmacy", amount: "$18.76", domain: "cvs.com" },
+        { merchant: "Uniqlo", amount: "$97.50", domain: "uniqlo.com" },
+      ]},
+      { date: "Jul 7, 2025", items: [
+        { merchant: "Wayfair", amount: "$312.40", domain: "wayfair.com" },
+        { merchant: "Barnes & Noble", amount: "$28.99", domain: "barnesandnoble.com" },
+        { merchant: "COSTCO", amount: "$41.10", domain: "costco.com" },
       ]},
     ],
   },

@@ -192,7 +192,11 @@ function CategoryDetail({ ctx }) {
             <div style={{ padding: "8px 16px", background: "#f4f5f7", fontSize: 12, color: SS.GRAY, fontWeight: 600 }}>{g.date}</div>
             {g.items.map((it, i) => (
               <button key={i} onClick={() => ctx.go("txn")} style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", textAlign: "left", padding: "12px 16px", background: "none", border: "none", borderBottom: `1px solid ${SS.LINE}`, cursor: "pointer", fontFamily: SS.FONT }}>
-                <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#eef0f3", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: SS.GRAY }}>{it.merchant[0]}</div>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#fff", border: `1px solid ${SS.LINE}`, flexShrink: 0, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {it.domain
+                    ? <img src={`https://www.google.com/s2/favicons?domain=${it.domain}&sz=128`} alt="" width={20} height={20} style={{ display: "block", objectFit: "contain" }} />
+                    : <span style={{ fontSize: 13, fontWeight: 800, color: SS.GRAY }}>{it.merchant[0]}</span>}
+                </div>
                 <span style={{ flex: 1, fontSize: 13.5, color: SS.INK, lineHeight: 1.3 }}>{it.merchant}</span>
                 <span style={{ fontSize: 13.5, fontWeight: 600, color: it.credit ? "#1f8a4c" : SS.INK, whiteSpace: "nowrap" }}>{it.amount}</span>
               </button>

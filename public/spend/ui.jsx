@@ -31,14 +31,14 @@ const IconWarn = ({ s = 40, c = "#8a9099" }) => (
 );
 
 // ── iOS status bar ──
-function StatusBar() {
+function StatusBar({ bg = "transparent", fg = "#000" }) {
   return (
-    <div style={{ height: 44, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 22px 0 26px", flexShrink: 0 }}>
-      <span style={{ fontSize: 14, fontWeight: 700, color: "#000", letterSpacing: 0.3 }}>9:41</span>
+    <div style={{ height: 44, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 22px 0 26px", flexShrink: 0, background: bg }}>
+      <span style={{ fontSize: 14, fontWeight: 700, color: fg, letterSpacing: 0.3 }}>9:41</span>
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        <svg width="17" height="11" viewBox="0 0 17 11" fill="none">{[0,1,2,3].map(i=>(<rect key={i} x={i*4.5} y={9-(i+1)*2} width="3" height={(i+1)*2+1} rx="0.6" fill="#000" />))}</svg>
-        <svg width="16" height="11" viewBox="0 0 16 12" fill="none"><path d="M8 11.2 1 4.5a10 10 0 0 1 14 0L8 11.2Z" fill="#000" /></svg>
-        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#000" opacity="0.4" /><rect x="2" y="2" width="17" height="8" rx="1.5" fill="#000" /><rect x="23" y="4" width="1.6" height="4" rx="0.8" fill="#000" opacity="0.4" /></svg>
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="none">{[0,1,2,3].map(i=>(<rect key={i} x={i*4.5} y={9-(i+1)*2} width="3" height={(i+1)*2+1} rx="0.6" fill={fg} />))}</svg>
+        <svg width="16" height="11" viewBox="0 0 16 12" fill="none"><path d="M8 11.2 1 4.5a10 10 0 0 1 14 0L8 11.2Z" fill={fg} /></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke={fg} opacity="0.4" /><rect x="2" y="2" width="17" height="8" rx="1.5" fill={fg} /><rect x="23" y="4" width="1.6" height="4" rx="0.8" fill={fg} opacity="0.4" /></svg>
       </div>
     </div>
   );

@@ -234,7 +234,7 @@ export default function ProjectPage() {
                 src="/spend/Spend%20Summary.html?embed=1"
                 title="Spend Summary interactive prototype"
                 loading="lazy"
-                style={{ width: '100%', maxWidth: 440, height: 900, border: 0, borderRadius: 12, background: 'transparent', colorScheme: 'light' }}
+                style={{ width: '100%', maxWidth: 560, height: 900, border: 0, borderRadius: 12, background: 'transparent', colorScheme: 'light' }}
               />
             </div>
             <p style={{ textAlign: 'center', marginTop: 18, fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--fg-muted)' }}>
