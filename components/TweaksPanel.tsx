@@ -85,7 +85,7 @@ export default function TweaksPanel() {
       {open && (
         <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Section label="Direction">
-            <Radio label="Theme" value={theme} options={['editorial', 'studio', 'display'] as Theme[]}
+            <Radio label="Theme" value={theme} options={['editorial', 'studio', 'display', 'neon'] as Theme[]}
               onChange={(v) => setTheme(v as Theme)} />
           </Section>
 

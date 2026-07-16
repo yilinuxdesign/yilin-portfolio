@@ -19,11 +19,16 @@ export const ACCENTS: Record<Theme, Record<string, string>> = {
     lime:    'oklch(0.70 0.18 130)',
     ink:     'oklch(0.14 0.01 60)',
   },
+  neon: {
+    default: 'oklch(0.72 0.19 300)',
+    teal:    'oklch(0.78 0.16 190)',
+    magenta: 'oklch(0.68 0.22 350)',
+  },
 }
 
 export const DEFAULT_THEME_STATE = {
-  theme: 'studio' as Theme,
-  mode: 'light' as const,
+  theme: 'neon' as Theme,
+  mode: 'dark' as const,
   density: 'regular' as const,
   accent: 'default',
   showCustomCursor: true,

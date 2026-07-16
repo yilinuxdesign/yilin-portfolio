@@ -130,6 +130,98 @@ body {
   --accent-bg: oklch(0.30 0.08 30);
 }
 
+/* ────────── Theme: Neon (dark / motion) ────────── */
+[data-theme="neon"] {
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-body: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-ui: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  --display-leading: 1.05;
+}
+[data-theme="neon"][data-mode="dark"],
+[data-theme="neon"][data-mode="light"] {
+  --bg: oklch(0.16 0.006 280);
+  --bg-elev: oklch(0.205 0.008 280);
+  --fg: oklch(0.96 0.01 280);
+  --fg-muted: oklch(0.74 0.02 280);
+  --fg-faint: oklch(0.96 0.01 280);
+  --rule: oklch(0.30 0.03 290);
+  --rule-soft: oklch(0.24 0.025 290);
+  --accent: oklch(0.72 0.19 300);
+  --accent-bg: oklch(0.30 0.10 290);
+}
+[data-theme="neon"] .hero-name em,
+[data-theme="neon"] .footer-cta em { font-style: normal; }
+[data-theme="neon"] body { background: var(--bg); }
+[data-theme="neon"] .nav { background: color-mix(in oklab, var(--bg) 70%, transparent); }
+[data-theme="neon"] .nav-logo .dot,
+[data-theme="neon"] .cv-card,
+[data-theme="neon"] .thumb,
+[data-theme="neon"] .footer-cta-arrow {
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 55%, transparent);
+}
+[data-theme="neon"] .hero-name,
+[data-theme="neon"] .footer-cta,
+[data-theme="neon"] .footer-cta * {
+  background: linear-gradient(90deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+[data-theme="neon"] .footer-cta:hover,
+[data-theme="neon"] .footer-cta:hover * {
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+[data-theme="neon"] a { color: var(--accent); }
+[data-theme="neon"] a:hover { color: color-mix(in oklab, var(--accent) 70%, white); }
+[data-theme="neon"]::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(900px 900px at 90% -10%, oklch(0.55 0.20 300 / 0.28), transparent 60%),
+    radial-gradient(700px 700px at -10% 60%, oklch(0.65 0.15 190 / 0.20), transparent 60%);
+}
+[data-theme="neon"] .section-label h2,
+[data-theme="neon"] .row-title,
+[data-theme="neon"] .exp-headline,
+[data-theme="neon"] .scrollstory-side h2,
+[data-theme="neon"] .cs-card-title,
+[data-theme="neon"] .cv-card-title { color: var(--fg); }
+[data-theme="neon"] .detail-title { color: var(--fg-muted); }
+[data-theme="neon"] .cs-card {
+  background: transparent; color: var(--fg);
+  border: 1.5px solid color-mix(in oklab, var(--fg-faint) 60%, transparent);
+}
+[data-theme="neon"] .cs-card::before {
+  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+}
+[data-theme="neon"] .cs-card:hover .cs-card-title,
+[data-theme="neon"] .cs-card:hover .cs-card-eyebrow,
+[data-theme="neon"] .cs-card:hover .cs-card-sub { color: black; }
+[data-theme="neon"] .cs-card-eyebrow { color: var(--fg-faint); }
+[data-theme="neon"] .cs-card-arrow { background: var(--fg); color: var(--bg); }
+[data-theme="neon"] .cs-card:hover .cs-card-arrow {
+  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  color: var(--bg);
+}
+[data-theme="neon"] .back-cta:hover .back-cta-label,
+[data-theme="neon"] .back-cta:hover .back-cta-eyebrow,
+[data-theme="neon"] .back-cta:hover .back-cta-meta { color: black; }
+[data-theme="neon"] .back-cta::before {
+  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+}
+[data-theme="neon"] .back-cta:hover .back-cta-arrow {
+  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  color: var(--bg);
+}
+[data-theme="neon"] .curtain {
+  background: radial-gradient(140% 140% at 50% 100%, oklch(0.32 0.08 300) 0%, oklch(0.20 0.03 280) 70%);
+}
+[data-theme="neon"] .slide-dot.active::before {
+  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 60%, transparent);
+}
+
 /* ────────── Density ────────── */
 [data-density="cozy"]   { --row-pad: clamp(40px, 6vw, 84px); --row-gap: 8px; }
 [data-density="regular"]{ --row-pad: clamp(28px, 4.5vw, 64px); --row-gap: 6px; }

@@ -5,6 +5,8 @@ import {
   Geist,
   Geist_Mono,
   Bricolage_Grotesque,
+  Space_Grotesk,
+  Space_Mono,
 } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/lib/ThemeContext'
@@ -44,6 +46,20 @@ const bricolage = Bricolage_Grotesque({
   display: 'swap',
 })
 
+const spaceGrotesk = Space_Grotesk({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+})
+
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-space-mono',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Yilin Jia — Senior Product Designer',
   description:
@@ -63,10 +79,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="studio"
-      data-mode="light"
+      data-theme="neon"
+      data-mode="dark"
       data-density="regular"
-      className={`${instrumentSerif.variable} ${sourceSerif.variable} ${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
+      className={`${instrumentSerif.variable} ${sourceSerif.variable} ${geist.variable} ${geistMono.variable} ${bricolage.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
     >
       <body>
         <ThemeProvider>

@@ -24,7 +24,7 @@ export interface Project {
   metrics: Metric[]
 }
 
-export type Theme = 'editorial' | 'studio' | 'display'
+export type Theme = 'editorial' | 'studio' | 'display' | 'neon'
 export type Mode = 'light' | 'dark'
 export type Density = 'cozy' | 'regular' | 'tight'
 
