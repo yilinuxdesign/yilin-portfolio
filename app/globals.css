@@ -366,7 +366,7 @@ body {
   font-family: var(--font-display);
   font-weight: var(--display-weight);
   font-size: clamp(42px, 7.5vw, 116px);
-  line-height: 0.94;
+  line-height: var(--display-leading, 0.94);
   letter-spacing: var(--display-tracking);
   margin: 0;
 }
@@ -497,7 +497,7 @@ body {
 .footer-eyebrow .dim { color: var(--fg-faint); }
 .footer-cta {
   display: block; font-family: var(--font-display); font-weight: var(--display-weight);
-  font-size: clamp(32px, 5.5vw, 84px); line-height: 0.96;
+  font-size: clamp(32px, 5.5vw, 84px); line-height: var(--display-leading, 0.96);
   letter-spacing: var(--display-tracking); color: var(--fg); text-decoration: none;
   margin: 0 0 clamp(40px, 6vh, 80px); cursor: pointer;
 }

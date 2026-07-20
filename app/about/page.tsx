@@ -155,6 +155,14 @@ export default function AboutPage() {
   const experience = TIMELINE.filter((t) => !isEducation(t))
   const education = TIMELINE.filter(isEducation)
 
+  // Derive the "N projects · earliest — latest" meta from the actual projects
+  const projectYears = visibleProjects
+    .map((p) => parseInt(p.year, 10))
+    .filter((y) => !Number.isNaN(y))
+  const yearRange = projectYears.length
+    ? `${Math.min(...projectYears)} — ${Math.max(...projectYears)}`
+    : ''
+
   return (
     <div className="page" data-screen-label="About">
       <Nav onResume={() => setResumeOpen(true)} />
@@ -341,7 +349,7 @@ export default function AboutPage() {
             View all selected work
             <span className="back-cta-arrow" aria-hidden="true">→</span>
           </span>
-          <span className="back-cta-meta mono">{visibleProjects.length} projects · 2021 — 2026</span>
+          <span className="back-cta-meta mono">{visibleProjects.length} projects · {yearRange}</span>
         </button>
       </section>
 
