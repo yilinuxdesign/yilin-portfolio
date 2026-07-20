@@ -204,6 +204,10 @@ body {
   background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
   color: var(--bg);
 }
+[data-theme="neon"] .back-cta {
+  background: transparent; color: var(--fg);
+  border: 1.5px solid color-mix(in oklab, var(--fg-faint) 60%, transparent);
+}
 [data-theme="neon"] .back-cta:hover .back-cta-label,
 [data-theme="neon"] .back-cta:hover .back-cta-eyebrow,
 [data-theme="neon"] .back-cta:hover .back-cta-meta { color: black; }
