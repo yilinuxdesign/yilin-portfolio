@@ -175,7 +175,7 @@ export default function HomePage() {
         ref={(el) => { slideRefs.current[visibleProjects.length + 1] = el }}
         className="snap footer-slide"
       >
-        <Footer onResume={() => setResumeOpen(true)} />
+        <Footer />
       </section>
 
       <SlideNav slides={slides} activeIdx={activeIdx} visible={dotsVisible} onDotClick={scrollTo} />

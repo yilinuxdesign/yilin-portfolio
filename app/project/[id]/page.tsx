@@ -310,7 +310,7 @@ export default function ProjectPage() {
         </button>
       </section>
 
-      <Footer onResume={() => setResumeOpen(true)} />
+      <Footer />
 
       {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>

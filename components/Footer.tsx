@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-export default function Footer({ onResume }: { onResume?: () => void }) {
+export default function Footer() {
   const [copied, setCopied] = useState(false)
   const email = 'yilinuxdesign@gmail.com'
 
@@ -38,12 +38,6 @@ export default function Footer({ onResume }: { onResume?: () => void }) {
               <span className="footer-copy-state">
                 {copied ? 'Copied ✓' : 'click to copy'}
               </span>
-            </button>
-          </div>
-          <div className="footer-quick">
-            <a href={`mailto:${email}`} className="btn">Send an email →</a>
-            <button className="btn btn-ghost" onClick={onResume}>
-              View résumé
             </button>
           </div>
         </div>

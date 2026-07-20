@@ -13,7 +13,7 @@ export const projects: Project[] = [
     color: 'oklch(0.55 0.13 95)',
     status: 'draft',
     summary:
-      'A unified subscription hub for cardholders — surfacing every recurring charge across the card, flagging price hikes and free-trial roll-offs, and making cancel-or-keep decisions a one-tap action instead of a Saturday-afternoon project.',
+      'A unified subscription hub — surfacing every recurring charge, flagging price hikes, and making cancel-or-keep a one-tap decision.',
     problem:
       'Recurring subscriptions are the #2 source of customer-disputed charges and the #1 driver of \'what is this?\' support contacts. Customers know they have \'too many\' subscriptions but can\'t see them as a set — they\'re scattered through the transaction list, often with cryptic merchant strings.',
     approach:
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     heroImage: '/assets/spend-hero.png',
     status: 'draft',
     summary:
-      'An end-of-cycle spend summary for credit-card customers — turning a wall of transactions into a glanceable narrative about where money went, how it compares to last month, and what\'s worth a second look.',
+      'An end-of-cycle spend summary that turns a wall of transactions into a glanceable story — what changed, and what\'s worth a second look.',
     problem:
       'Cardholders open the app at statement time to find out \'what did I spend on?\' and currently get either a flat transaction list or a generic pie chart. Neither answers the real question. Engagement with the existing insights surface is < 8% MoM.',
     approach:
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     color: 'oklch(0.52 0.13 145)',
     status: 'shipped',
     summary:
-      'Rebuilding mobile check deposit around real-time capture guidance — coaching customers to a usable image while the camera is still open, instead of failing the deposit three screens later. End-to-end work across the camera experience, the review screen, and the error and confirmation states.',
+      'Rebuilding check deposit around real-time capture guidance — coaching customers to a good image while the camera is still open.',
     problem:
       'Check deposit had the highest abandonment of any money-movement flow. Blurry, glare-washed, or cropped captures bounced at the back end, so customers learned they\'d failed only after submitting — and many never came back to retry. The old flow gave no feedback during capture and cryptic rejections after it.',
     approach:
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     color: 'oklch(0.55 0.16 30)',
     status: 'shipped',
     summary:
-      'Reimagining how millions of users discover and add billers across web and mobile — turning a brittle keyword match into a forgiving, intent-aware search.',
+      'Reimagining how millions discover and add billers — turning a brittle keyword match into a forgiving, intent-aware search.',
     problem:
       'Customers couldn\'t find the biller they wanted. Half of all support tickets started with \'I searched for X but it didn\'t show up.\' The legacy index only matched exact strings against a curated catalog of 12,000+ payees.',
     approach:
@@ -116,7 +116,7 @@ export const projects: Project[] = [
     color: 'oklch(0.50 0.16 250)',
     status: 'shipped',
     summary:
-      'Re-architecting a banking app\'s information architecture to nudge web-first customers into mobile — without losing the trust signals long-tenured users rely on.',
+      'Re-architecting the app\'s IA to nudge web-first customers into mobile — without losing the trust long-tenured users rely on.',
     problem:
       'Citi\'s mobile app had broad parity with web but lower engagement. Users defaulted to web for complex tasks. The nav was alphabetical, not task-oriented, and core actions sat three taps deep.',
     approach:
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     color: 'oklch(0.45 0.10 290)',
     status: 'shipped',
     summary:
-      'Yui is Toyota\'s voice-first, multimodal in-car AI agent, paired with LQ — a SAE Level 4 autonomous concept vehicle. Built on a \'learn, grow, love\' principle, Yui builds an emotional bond between car and rider, and was bound for the Toyota Yui Project Tours at the 2020 Tokyo Olympics.',
+      'Toyota\'s voice-first, multimodal in-car AI, paired with LQ — a Level 4 autonomous concept car built to bond emotionally with its rider.',
     problem:
       'A 30-minute autonomous ride had to feel like a conversation with a friend, not a robot reading a list. Yui needed to lead by voice — the safest channel in a moving car — while orchestrating light, sound, scent and motion, adapting its content to each rider across three languages with no driver to step in.',
     approach:

@@ -29,9 +29,8 @@ const TIMELINE: TimelineEntry[] = [
     details:
       "Lead designer on Citi's Pay & Service product, owning end-to-end UX for the most critical consumer payment surfaces — from bill-pay search and account linking to spend insights and subscription management.",
     bullets: [
-      'Lead designer on the Bill Pay biller-search redesign — raised first-search success and cut support tickets driven by discovery failures.',
-      'Designed the unified account-picker for Mastercard Open Banking integration; pattern adopted across multiple money-movement squads.',
-      'Currently leading two parallel concepts — Credit-Card Spend Summary and Subscription Management — both in active research and design.',
+      'Designed the unified account-picker for Mastercard Open Banking integration.',
+      'Leading Credit-Card Spend Summary and Subscription Management concepts.',
       "Mentor junior designers; run the studio's regular critique.",
     ],
   },
@@ -45,9 +44,9 @@ const TIMELINE: TimelineEntry[] = [
     details:
       "Worked across the full suite of Citi's digital payment services, from internal servicing tools used by support agents to consumer-facing flows on web and mobile.",
     bullets: [
-      'Contributed to mobile IA work that restructured navigation around customer goals rather than product lines.',
-      'Designed payment confirmation, status, and exception patterns reused across multiple product surfaces.',
-      'Partnered closely with research and engineering on accessibility audits and remediation work.',
+      'Restructured mobile IA around customer goals instead of product lines.',
+      'Designed confirmation, status, and exception patterns reused site-wide.',
+      'Partnered with research and engineering on accessibility remediation.',
     ],
   },
   {
@@ -60,9 +59,9 @@ const TIMELINE: TimelineEntry[] = [
     details:
       'Designed the conversational user experience for an in-vehicle AI agent at TRI — a project that was preparing to debut publicly at the 2021 Tokyo Olympics autonomous-mobility demo.',
     bullets: [
-      'Defined the conversational model, persona, and dialog patterns for the in-vehicle assistant.',
-      'Ran Wizard-of-Oz sessions in a static mock vehicle to validate handoff and turn-taking moments.',
-      'Partnered with research and ML engineers to translate user-research findings into intent and slot design.',
+      'Defined the conversational model, persona, and dialog patterns for the assistant.',
+      'Ran Wizard-of-Oz sessions in a mock vehicle to validate handoff moments.',
+      'Partnered with ML engineers to translate research into intent and slot design.',
     ],
   },
   {
@@ -353,7 +352,7 @@ export default function AboutPage() {
         </button>
       </section>
 
-      <Footer onResume={() => setResumeOpen(true)} />
+      <Footer />
 
       {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
