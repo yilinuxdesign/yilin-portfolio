@@ -21,7 +21,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('portfolio-theme')
+      const saved = localStorage.getItem('portfolio-theme-v2')
       if (saved) setState({ ...DEFAULT_THEME_STATE, ...JSON.parse(saved) })
     } catch {}
   }, [])
@@ -33,7 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.dataset.density = state.density
     const accentColor = ACCENTS[state.theme]?.[state.accent] ?? ACCENTS[state.theme].default
     root.style.setProperty('--accent', accentColor)
-    try { localStorage.setItem('portfolio-theme', JSON.stringify(state)) } catch {}
+    try { localStorage.setItem('portfolio-theme-v2', JSON.stringify(state)) } catch {}
   }, [state])
 
   const setTheme = useCallback((theme: Theme) =>
