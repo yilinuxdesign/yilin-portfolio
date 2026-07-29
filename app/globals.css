@@ -249,8 +249,11 @@ body {
   background: none; -webkit-background-clip: border-box; background-clip: border-box;
   color: black; -webkit-text-fill-color: black; box-shadow: none;
 }
-[data-theme="neon"] .curtain {
+[data-theme="neon"][data-mode="dark"] .curtain {
   background: radial-gradient(140% 140% at 50% 100%, oklch(0.32 0.08 300) 0%, oklch(0.20 0.03 280) 70%);
+}
+[data-theme="neon"][data-mode="light"] .curtain {
+  background: radial-gradient(140% 140% at 50% 100%, oklch(0.88 0.05 300) 0%, oklch(0.95 0.015 280) 70%);
 }
 [data-theme="neon"] .slide-dot.active::before {
   background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
