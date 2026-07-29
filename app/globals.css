@@ -184,6 +184,18 @@ body {
 [data-theme="neon"] .footer-cta:hover * {
   color: transparent; -webkit-text-fill-color: transparent;
 }
+/* On hover: keep the ↗ glyph gradient (via background-clip:text) and change the
+   CIRCLE's background instead. The base hover's `background` shorthand would
+   reset the clip and hide the glyph, so re-assert the gradient text-fill here
+   and fill the circle with an inset shadow (which ignores background-clip). */
+[data-theme="neon"] .footer-cta:hover .footer-cta-arrow {
+  background: linear-gradient(90deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  box-shadow:
+    inset 0 0 0 100px color-mix(in oklab, var(--accent) 26%, transparent),
+    0 0 18px color-mix(in oklab, var(--accent) 60%, transparent);
+}
 [data-theme="neon"] a { color: var(--accent); }
 [data-theme="neon"] a:hover { color: color-mix(in oklab, var(--accent) 70%, white); }
 [data-theme="neon"]::before {
