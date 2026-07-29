@@ -1,42 +1,23 @@
 'use client'
 
-import { useRef } from 'react'
-import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
-
-gsap.registerPlugin(useGSAP)
-
+// Hero title uses a CSS staggered word-reveal (.hn-line / .hn-word) plus the
+// neon ambient drifting glow — no GSAP, matching the design.
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null)
-
-  useGSAP(() => {
-    const els = containerRef.current?.querySelectorAll('[data-gsap-hero]')
-    if (!els) return
-    gsap.from(els, {
-      y: 30,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 0.9,
-      ease: 'power3.out',
-      delay: 0.1,
-    })
-  }, { scope: containerRef })
-
   return (
-    <section ref={containerRef} className="snap hero">
+    <section className="snap hero">
       <div className="container hero-layout">
-        <div className="hero-middle" data-gsap-hero>
-          <h1 className="hero-name">
-            Senior product<br />
-            designer for<br />
-            <em>financial</em> products.
+        <div className="hero-middle">
+          <h1 className="hero-name hero-name-animated">
+            <span className="hn-line"><span className="hn-word">Senior</span> <span className="hn-word">product</span></span>
+            <span className="hn-line"><span className="hn-word">designer</span> <span className="hn-word">for</span></span>
+            <span className="hn-line"><em><span className="hn-word">financial products.</span></em></span>
           </h1>
         </div>
 
-        <div className="hero-top" data-gsap-hero>
+        <div className="hero-top">
           <div className="hero-eyebrow" style={{ margin: 0 }}>
             <span className="pulse" aria-hidden="true" />
-            <span>Lead Designer, Pay & Service · Citi</span>
+            <span>Lead Designer, Pay &amp; Service · Citi</span>
           </div>
           <div className="hero-locator mono">
             <span style={{ fontWeight: 600 }}>Yilin Jia</span>
@@ -46,7 +27,7 @@ export default function Hero() {
         </div>
 
         <div className="hero-bottom">
-          <div className="hero-intro-col" data-gsap-hero>
+          <div className="hero-intro-col">
             <div className="mono hero-tag">— About</div>
             <p className="hero-intro">
               7+ years designing financial products — dashboards that turn raw
@@ -55,10 +36,10 @@ export default function Hero() {
               accounts. I bring clarity, creativity, and purpose to every project I take on.
             </p>
           </div>
-          <div className="hero-meta-grid" data-gsap-hero>
+          <div className="hero-meta-grid">
             <div className="hero-meta-cell">
               <div className="mono cell-label">Currently</div>
-              <div className="cell-value">Lead Designer, Pay & Service · Citi</div>
+              <div className="cell-value">Lead Designer, Pay &amp; Service · Citi</div>
             </div>
             <div className="hero-meta-cell">
               <div className="mono cell-label">Focus</div>

@@ -6,6 +6,9 @@ import Link from 'next/link'
 export default function Footer() {
   const [copied, setCopied] = useState(false)
   const email = 'yilinuxdesign@gmail.com'
+  const ctaBody = encodeURIComponent(
+    "Hi Yilin — saw your work and want to design something worth using together. Here's what I have in mind:\n\n"
+  )
 
   const copyEmail = () => {
     navigator.clipboard?.writeText(email)
@@ -16,7 +19,7 @@ export default function Footer() {
   return (
     <footer className="footer" style={{ width: '100%', borderTop: 0, marginTop: 0, paddingTop: 0 }}>
       <div className="container">
-        <a className="footer-cta" href={`mailto:${email}?subject=Hello%20Yilin`}>
+        <a className="footer-cta" href={`mailto:${email}?subject=Hello%20Yilin&body=${ctaBody}`}>
           <span className="footer-cta-line">Let&apos;s design</span>
           <span className="footer-cta-line">
             something<span className="footer-cta-arrow" aria-hidden="true">↗</span>

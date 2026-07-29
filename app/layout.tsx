@@ -62,7 +62,7 @@ const spaceMono = Space_Mono({
 
 // Runs before paint: auto light (studio) 7am–7pm, neon dark otherwise,
 // unless the user set an explicit override via the nav ☀/☾ toggle.
-const THEME_INIT = `(function(){try{var el=document.documentElement;var o=localStorage.getItem('theme-override');function a(t,m){el.setAttribute('data-theme',t);el.setAttribute('data-mode',m);}if(o==='light'){a('studio','light');return;}if(o==='dark'){a('neon','dark');return;}var h=new Date().getHours();if(h>=7&&h<19){a('studio','light');}else{a('neon','dark');}}catch(e){}})();`
+const THEME_INIT = `(function(){try{var el=document.documentElement;var o=localStorage.getItem('theme-override');function a(m){el.setAttribute('data-theme','neon');el.setAttribute('data-mode',m);}if(o==='light'){a('light');return;}if(o==='dark'){a('dark');return;}var h=new Date().getHours();a(h>=7&&h<19?'light':'dark');}catch(e){}})();`
 
 export const metadata: Metadata = {
   title: 'Yilin Jia — Senior Product Designer',

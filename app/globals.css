@@ -140,17 +140,27 @@ body {
   --display-tracking: -0.02em;
   --display-leading: 1.27;
 }
-[data-theme="neon"][data-mode="dark"],
-[data-theme="neon"][data-mode="light"] {
+[data-theme="neon"][data-mode="dark"] {
   --bg: oklch(0.16 0.006 280);
   --bg-elev: oklch(0.205 0.008 280);
   --fg: oklch(0.96 0.01 280);
   --fg-muted: oklch(0.74 0.02 280);
-  --fg-faint: oklch(0.96 0.01 280);
+  --fg-faint: oklch(0.58 0.02 280);
   --rule: oklch(0.30 0.03 290);
   --rule-soft: oklch(0.24 0.025 290);
   --accent: oklch(0.72 0.19 300);
   --accent-bg: oklch(0.30 0.10 290);
+}
+[data-theme="neon"][data-mode="light"] {
+  --bg: oklch(0.97 0.008 280);
+  --bg-elev: oklch(0.93 0.012 280);
+  --fg: oklch(0.20 0.02 280);
+  --fg-muted: oklch(0.42 0.02 280);
+  --fg-faint: oklch(0.54 0.02 280);
+  --rule: oklch(0.85 0.015 280);
+  --rule-soft: oklch(0.90 0.01 280);
+  --accent: oklch(0.55 0.19 300);
+  --accent-bg: oklch(0.90 0.06 290);
 }
 [data-theme="neon"] .hero-name em,
 [data-theme="neon"] .footer-cta em { font-style: normal; }
@@ -162,7 +172,8 @@ body {
 [data-theme="neon"] .footer-cta-arrow {
   box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 55%, transparent);
 }
-[data-theme="neon"] .hero-name,
+[data-theme="neon"] .hero-name em,
+[data-theme="neon"] .hero-name em .hn-word,
 [data-theme="neon"] .footer-cta,
 [data-theme="neon"] .footer-cta * {
   background: linear-gradient(90deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
@@ -207,7 +218,17 @@ body {
 [data-theme="neon"] .back-cta {
   background: transparent; color: var(--fg);
   border: 1px solid var(--rule-soft);
-  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 55%, transparent);
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+[data-theme="neon"] .back-cta:hover {
+  box-shadow: 0 0 22px 3px color-mix(in oklab, var(--accent) 60%, transparent);
+}
+[data-theme="neon"] .footer-copy-state {
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+[data-theme="neon"] .footer-email-link:hover .footer-copy-state {
+  box-shadow: 0 0 18px 2px color-mix(in oklab, var(--accent) 65%, transparent);
 }
 /* Arrow matches the footer "Let's design something ↗" — bold gradient glyph
    with a glow, not a solid circle badge. */
@@ -387,6 +408,41 @@ body {
 .hero-name em { font-style: italic; color: var(--accent); }
 [data-theme="studio"] .hero-name em  { font-style: normal; }
 [data-theme="display"] .hero-name em { font-style: normal; }
+
+/* Hero title — staggered word reveal + ambient drifting glow */
+.hero-name-animated { position: relative; }
+.hero-name-animated .hn-line { display: block; overflow: hidden; }
+.hero-name-animated .hn-word {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  animation: hn-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-name-animated .hn-line:nth-child(1) .hn-word:nth-child(1) { animation-delay: 0.05s; }
+.hero-name-animated .hn-line:nth-child(1) .hn-word:nth-child(2) { animation-delay: 0.13s; }
+.hero-name-animated .hn-line:nth-child(2) .hn-word:nth-child(1) { animation-delay: 0.21s; }
+.hero-name-animated .hn-line:nth-child(2) .hn-word:nth-child(2) { animation-delay: 0.29s; }
+.hero-name-animated .hn-line:nth-child(3) .hn-word:nth-child(1) { animation-delay: 0.37s; }
+.hero-name-animated .hn-line:nth-child(3) .hn-word:nth-child(2) { animation-delay: 0.45s; }
+@keyframes hn-rise { to { transform: translateY(0); opacity: 1; } }
+[data-theme="neon"] .hero-middle { position: relative; }
+[data-theme="neon"] .hero-middle::before {
+  content: ""; position: absolute; inset: -20% -10%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38% 55% at 20% 30%, oklch(0.55 0.20 300 / 0.30), transparent 70%),
+    radial-gradient(32% 50% at 80% 70%, oklch(0.65 0.16 190 / 0.22), transparent 70%);
+  filter: blur(40px);
+  animation: hn-drift 14s ease-in-out infinite alternate;
+}
+@keyframes hn-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3%, -4%) scale(1.06); }
+  100% { transform: translate(-3%, 3%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-name-animated .hn-word { animation: none; opacity: 1; transform: none; }
+  [data-theme="neon"] .hero-middle::before { animation: none; }
+}
 .hero-intro {
   max-width: 56ch; margin: 0;
   font-family: var(--font-body);

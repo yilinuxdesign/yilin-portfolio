@@ -47,14 +47,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setShowCustomCursor = useCallback((showCustomCursor: boolean) =>
     setState((s) => ({ ...s, showCustomCursor })), [])
 
-  // Persistent light/dark override: light → studio, dark → neon.
+  // Persistent light/dark override — the neon theme in either mode.
   const toggleTheme = useCallback(() =>
     setState((s) => {
-      const next = s.mode === 'light'
-        ? { theme: 'neon' as Theme, mode: 'dark' as Mode }
-        : { theme: 'studio' as Theme, mode: 'light' as Mode }
-      try { localStorage.setItem('theme-override', next.mode) } catch {}
-      return { ...s, ...next, accent: 'default' }
+      const mode: Mode = s.mode === 'light' ? 'dark' : 'light'
+      try { localStorage.setItem('theme-override', mode) } catch {}
+      return { ...s, theme: 'neon', mode, accent: 'default' }
     }), [])
 
   const accentColor = ACCENTS[state.theme]?.[state.accent] ?? ACCENTS[state.theme].default

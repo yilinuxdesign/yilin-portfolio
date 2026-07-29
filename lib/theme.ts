@@ -40,8 +40,8 @@ export function computeAutoTheme(): { theme: Theme; mode: 'light' | 'dark' } {
   if (typeof window === 'undefined') return { theme: 'neon', mode: 'dark' }
   let override: string | null = null
   try { override = localStorage.getItem('theme-override') } catch {}
-  if (override === 'light') return { theme: 'studio', mode: 'light' }
+  if (override === 'light') return { theme: 'neon', mode: 'light' }
   if (override === 'dark') return { theme: 'neon', mode: 'dark' }
   const h = new Date().getHours()
-  return h >= 7 && h < 19 ? { theme: 'studio', mode: 'light' } : { theme: 'neon', mode: 'dark' }
+  return { theme: 'neon', mode: h >= 7 && h < 19 ? 'light' : 'dark' }
 }
