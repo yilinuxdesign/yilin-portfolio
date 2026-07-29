@@ -206,19 +206,27 @@ body {
 }
 [data-theme="neon"] .back-cta {
   background: transparent; color: var(--fg);
-  border: 1.5px solid oklch(0.68 0.22 350);
-  box-shadow: 0 0 20px color-mix(in oklab, oklch(0.68 0.22 350) 55%, transparent);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 55%, transparent);
 }
-[data-theme="neon"] .back-cta-arrow { background: var(--fg); color: var(--bg); }
+/* Arrow matches the footer "Let's design something ↗" — bold gradient glyph
+   with a glow, not a solid circle badge. */
+[data-theme="neon"] .back-cta-arrow {
+  background: linear-gradient(90deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 55%, transparent);
+}
 [data-theme="neon"] .back-cta:hover .back-cta-label,
 [data-theme="neon"] .back-cta:hover .back-cta-eyebrow,
 [data-theme="neon"] .back-cta:hover .back-cta-meta { color: black; }
 [data-theme="neon"] .back-cta::before {
   background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
 }
+/* On hover the card fills with the gradient sweep, so the arrow reads as solid black. */
 [data-theme="neon"] .back-cta:hover .back-cta-arrow {
-  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
-  color: var(--bg);
+  background: none; -webkit-background-clip: border-box; background-clip: border-box;
+  color: black; -webkit-text-fill-color: black; box-shadow: none;
 }
 [data-theme="neon"] .curtain {
   background: radial-gradient(140% 140% at 50% 100%, oklch(0.32 0.08 300) 0%, oklch(0.20 0.03 280) 70%);

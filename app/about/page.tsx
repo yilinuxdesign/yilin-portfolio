@@ -346,7 +346,7 @@ export default function AboutPage() {
           <span className="back-cta-eyebrow mono">↩ Continue browsing</span>
           <span className="back-cta-label">
             View all selected work
-            <span className="back-cta-arrow" aria-hidden="true">→</span>
+            <span className="back-cta-arrow" aria-hidden="true">↗</span>
           </span>
           <span className="back-cta-meta mono">{visibleProjects.length} projects · {yearRange}</span>
         </button>
