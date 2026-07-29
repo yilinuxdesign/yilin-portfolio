@@ -206,8 +206,10 @@ body {
 }
 [data-theme="neon"] .back-cta {
   background: transparent; color: var(--fg);
-  border: 1.5px solid color-mix(in oklab, var(--fg-faint) 60%, transparent);
+  border: 1.5px solid oklch(0.68 0.22 350);
+  box-shadow: 0 0 20px color-mix(in oklab, oklch(0.68 0.22 350) 55%, transparent);
 }
+[data-theme="neon"] .back-cta-arrow { background: var(--fg); color: var(--bg); }
 [data-theme="neon"] .back-cta:hover .back-cta-label,
 [data-theme="neon"] .back-cta:hover .back-cta-eyebrow,
 [data-theme="neon"] .back-cta:hover .back-cta-meta { color: black; }
