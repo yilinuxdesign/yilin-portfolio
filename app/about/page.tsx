@@ -241,8 +241,8 @@ export default function AboutPage() {
                   <span className="cv-row-role">{t.title}</span>
                 </div>
                 {!isExpanded && <p className="cv-card-summary">{t.summary}</p>}
-                {isExpanded && (
-                  <div className="cv-card-details">
+                <div className={`cv-card-details ${isExpanded ? 'is-open' : ''}`}>
+                  <div className="cv-card-details-inner">
                     <p className="cv-card-details-lead">{t.details || t.summary}</p>
                     {t.bullets && (
                       <ul className="cv-card-bullets">
@@ -256,7 +256,7 @@ export default function AboutPage() {
                       ← Collapse
                     </button>
                   </div>
-                )}
+                </div>
                 {!isExpanded && <span className="cv-card-more mono">More ↗</span>}
               </li>
             )
@@ -294,8 +294,8 @@ export default function AboutPage() {
                 <div className="cv-card-title">{t.title}</div>
                 <div className="cv-card-place mono" style={{ marginTop: 4 }}>{t.place}</div>
                 {!isExpanded && <p className="cv-card-summary">{t.summary}</p>}
-                {isExpanded && (
-                  <div className="cv-card-details">
+                <div className={`cv-card-details ${isExpanded ? 'is-open' : ''}`}>
+                  <div className="cv-card-details-inner">
                     <p className="cv-card-details-lead">{t.details || t.summary}</p>
                     <button
                       className="cv-card-close mono"
@@ -304,7 +304,7 @@ export default function AboutPage() {
                       ← Collapse
                     </button>
                   </div>
-                )}
+                </div>
                 {!isExpanded && <span className="cv-card-more mono">More ↗</span>}
               </li>
             )

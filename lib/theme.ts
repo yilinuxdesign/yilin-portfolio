@@ -33,3 +33,15 @@ export const DEFAULT_THEME_STATE = {
   accent: 'default',
   showCustomCursor: true,
 }
+
+// Auto: light (studio) during the day, neon (dark) at night — unless the user
+// set an explicit override via the nav ☀/☾ toggle (localStorage 'theme-override').
+export function computeAutoTheme(): { theme: Theme; mode: 'light' | 'dark' } {
+  if (typeof window === 'undefined') return { theme: 'neon', mode: 'dark' }
+  let override: string | null = null
+  try { override = localStorage.getItem('theme-override') } catch {}
+  if (override === 'light') return { theme: 'studio', mode: 'light' }
+  if (override === 'dark') return { theme: 'neon', mode: 'dark' }
+  const h = new Date().getHours()
+  return h >= 7 && h < 19 ? { theme: 'studio', mode: 'light' } : { theme: 'neon', mode: 'dark' }
+}

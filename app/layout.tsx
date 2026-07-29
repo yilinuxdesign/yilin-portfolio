@@ -5,7 +5,7 @@ import {
   Geist,
   Geist_Mono,
   Bricolage_Grotesque,
-  Space_Grotesk,
+  Sora,
   Space_Mono,
 } from 'next/font/google'
 import './globals.css'
@@ -46,10 +46,10 @@ const bricolage = Bricolage_Grotesque({
   display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
-  weight: ['400', '500', '600', '700'],
+const sora = Sora({
+  weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-sora',
   display: 'swap',
 })
 
@@ -59,6 +59,10 @@ const spaceMono = Space_Mono({
   variable: '--font-space-mono',
   display: 'swap',
 })
+
+// Runs before paint: auto light (studio) 7am–7pm, neon dark otherwise,
+// unless the user set an explicit override via the nav ☀/☾ toggle.
+const THEME_INIT = `(function(){try{var el=document.documentElement;var o=localStorage.getItem('theme-override');function a(t,m){el.setAttribute('data-theme',t);el.setAttribute('data-mode',m);}if(o==='light'){a('studio','light');return;}if(o==='dark'){a('neon','dark');return;}var h=new Date().getHours();if(h>=7&&h<19){a('studio','light');}else{a('neon','dark');}}catch(e){}})();`
 
 export const metadata: Metadata = {
   title: 'Yilin Jia — Senior Product Designer',
@@ -82,8 +86,12 @@ export default function RootLayout({
       data-theme="neon"
       data-mode="dark"
       data-density="regular"
-      className={`${instrumentSerif.variable} ${sourceSerif.variable} ${geist.variable} ${geistMono.variable} ${bricolage.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
+      suppressHydrationWarning
+      className={`${instrumentSerif.variable} ${sourceSerif.variable} ${geist.variable} ${geistMono.variable} ${bricolage.variable} ${sora.variable} ${spaceMono.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+      </head>
       <body>
         <ThemeProvider>
           <CurtainTransition>

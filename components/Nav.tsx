@@ -3,10 +3,12 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCurtain } from './CurtainTransition'
+import { useTheme } from '@/lib/ThemeContext'
 
 export default function Nav({ onResume, mini = false }: { onResume: () => void; mini?: boolean }) {
   const pathname = usePathname()
   const { navigate } = useCurtain()
+  const { mode, toggleTheme } = useTheme()
 
   const links = [
     { href: '/', label: 'Home' },
@@ -48,6 +50,14 @@ export default function Nav({ onResume, mini = false }: { onResume: () => void; 
           >
             Contact
           </Link>
+          <button
+            className="nav-link theme-toggle"
+            aria-label="Toggle light/dark theme"
+            onClick={toggleTheme}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit', color: 'inherit' }}
+          >
+            {mode === 'light' ? '☾' : '☀'}
+          </button>
         </div>
       </div>
     </nav>
