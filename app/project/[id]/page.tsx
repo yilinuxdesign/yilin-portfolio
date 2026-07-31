@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -8,7 +8,6 @@ import { useGSAP } from '@gsap/react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Thumb from '@/components/Thumb'
-import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
 import { CheckDepositHero, CheckDepositCaptureFlow, CheckDepositScreens } from '@/components/detail/CheckDeposit'
 import { CardSpendResearch } from '@/components/detail/CardSpend'
@@ -26,7 +25,6 @@ export default function ProjectPage() {
   const prev = getPrevProject(project.id)
 
   const { navigate } = useCurtain()
-  const [resumeOpen, setResumeOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const isCheckDeposit = project.id === 'check-deposit'
   const isCardSpend = project.id === 'card-spend'
@@ -88,7 +86,7 @@ export default function ProjectPage() {
 
   return (
     <div ref={containerRef} className="page" data-screen-label={`Project · ${project.short}`}>
-      <Nav onResume={() => setResumeOpen(true)} />
+      <Nav />
 
       {/* Detail header */}
       <section className="container detail-hero">
@@ -311,8 +309,6 @@ export default function ProjectPage() {
       </section>
 
       <Footer />
-
-      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
   )
 }

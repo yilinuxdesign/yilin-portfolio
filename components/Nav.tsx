@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useCurtain } from './CurtainTransition'
 import { useTheme } from '@/lib/ThemeContext'
 
-export default function Nav({ mini = false }: { onResume?: () => void; mini?: boolean }) {
+export default function Nav({ mini = false }: { mini?: boolean }) {
   const pathname = usePathname()
   const { navigate } = useCurtain()
   const { mode, toggleTheme } = useTheme()

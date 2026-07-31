@@ -6,7 +6,6 @@ import Hero from '@/components/Hero'
 import Footer from '@/components/Footer'
 import SlideNav from '@/components/SlideNav'
 import Thumb from '@/components/Thumb'
-import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
 import { visibleProjects } from '@/lib/data'
 
@@ -15,7 +14,6 @@ export default function HomePage() {
   const [activeIdx, setActiveIdx] = useState(0)
   const [dotsVisible, setDotsVisible] = useState(false)
   const [navMini, setNavMini] = useState(false)
-  const [resumeOpen, setResumeOpen] = useState(false)
   const slideRefs = useRef<(HTMLElement | null)[]>([])
 
   const slides = [
@@ -94,7 +92,7 @@ export default function HomePage() {
 
   return (
     <div className="page" data-screen-label="Home">
-      <Nav onResume={() => setResumeOpen(true)} mini={navMini} />
+      <Nav mini={navMini} />
 
       <section ref={(el) => { slideRefs.current[0] = el }}>
         <Hero />
@@ -179,8 +177,6 @@ export default function HomePage() {
       </section>
 
       <SlideNav slides={slides} activeIdx={activeIdx} visible={dotsVisible} onDotClick={scrollTo} />
-
-      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
   )
 }

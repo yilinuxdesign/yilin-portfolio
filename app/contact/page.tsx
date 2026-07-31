@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import ResumeModal from '@/components/ResumeModal'
 
 interface FormState {
   name: string
@@ -15,7 +14,6 @@ interface FormState {
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export default function ContactPage() {
-  const [resumeOpen, setResumeOpen] = useState(false)
   const [form, setForm] = useState<FormState>({
     name: '', email: '', topic: 'Project inquiry', message: '',
   })
@@ -44,7 +42,7 @@ export default function ContactPage() {
 
   return (
     <div className="page" data-screen-label="Contact">
-      <Nav onResume={() => setResumeOpen(true)} />
+      <Nav />
 
       <section className="container contact-wrap">
         <div>
@@ -142,8 +140,6 @@ export default function ContactPage() {
       </section>
 
       <Footer />
-
-      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
   )
 }

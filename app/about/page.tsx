@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import ResumeModal from '@/components/ResumeModal'
 import { useCurtain } from '@/components/CurtainTransition'
 import { visibleProjects } from '@/lib/data'
 
@@ -106,7 +105,6 @@ const isEducation = (t: TimelineEntry) => /M\.S\.|B\.A\.|Ph\.D\./.test(t.duratio
 
 export default function AboutPage() {
   const { navigate } = useCurtain()
-  const [resumeOpen, setResumeOpen] = useState(false)
   const [expandedExp, setExpandedExp] = useState<number | null>(null)
   const [expandedEdu, setExpandedEdu] = useState<number | null>(null)
   // Track revealed cards in React state. The `in` class must live in the JSX
@@ -164,7 +162,7 @@ export default function AboutPage() {
 
   return (
     <div className="page" data-screen-label="About">
-      <Nav onResume={() => setResumeOpen(true)} />
+      <Nav />
 
       <section className="container about-hero">
         <div className="hero-eyebrow">
@@ -353,8 +351,6 @@ export default function AboutPage() {
       </section>
 
       <Footer />
-
-      {resumeOpen && <ResumeModal onClose={() => setResumeOpen(false)} />}
     </div>
   )
 }
