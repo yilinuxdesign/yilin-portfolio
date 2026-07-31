@@ -288,7 +288,7 @@ export default function ProjectPage() {
           <span className="cs-card-eyebrow mono">← Previous case study</span>
           <span className="cs-card-headwrap">
             <span className="cs-card-title">
-              <span className="cs-card-arrow" aria-hidden="true">←</span>
+              <span className="cs-card-arrow" aria-hidden="true">↖</span>
               {prev.title.split('—')[0].trim()}
             </span>
           </span>
@@ -302,7 +302,7 @@ export default function ProjectPage() {
           <span className="cs-card-headwrap">
             <span className="cs-card-title">
               {next.title.split('—')[0].trim()}
-              <span className="cs-card-arrow" aria-hidden="true">→</span>
+              <span className="cs-card-arrow" aria-hidden="true">↗</span>
             </span>
           </span>
         </button>
