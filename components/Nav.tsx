@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useCurtain } from './CurtainTransition'
 import { useTheme } from '@/lib/ThemeContext'
 
-export default function Nav({ onResume, mini = false }: { onResume: () => void; mini?: boolean }) {
+export default function Nav({ mini = false }: { onResume?: () => void; mini?: boolean }) {
   const pathname = usePathname()
   const { navigate } = useCurtain()
   const { mode, toggleTheme } = useTheme()
@@ -40,9 +40,15 @@ export default function Nav({ onResume, mini = false }: { onResume: () => void; 
               {l.label}
             </button>
           ))}
-          <button className="nav-link" onClick={onResume}>
+          <a
+            className="nav-link"
+            href="/Yilin_Jia_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
             Résumé
-          </button>
+          </a>
           <Link
             className="nav-link"
             href="mailto:yilinuxdesign@gmail.com?subject=Hello%20Yilin"
