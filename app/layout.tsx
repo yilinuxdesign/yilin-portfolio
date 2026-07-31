@@ -86,6 +86,7 @@ export default function RootLayout({
       data-theme="neon"
       data-mode="dark"
       data-density="regular"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${instrumentSerif.variable} ${sourceSerif.variable} ${geist.variable} ${geistMono.variable} ${bricolage.variable} ${sora.variable} ${spaceMono.variable}`}
     >

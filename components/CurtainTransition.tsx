@@ -24,15 +24,27 @@ export default function CurtainTransition({ children }: { children?: React.React
     if (!el) { router.push(href); return }
 
     setNavigating(true)
-    gsap.set(el, { scaleY: 0, transformOrigin: 'bottom', pointerEvents: 'all' })
+    // Cover: curtain descends from the top. Reveal: it keeps going and exits at
+    // the bottom — one continuous top-to-bottom sweep, so the incoming page is
+    // uncovered from the top down.
+    gsap.set(el, { scaleY: 0, transformOrigin: 'top', pointerEvents: 'all' })
     gsap.to(el, {
       scaleY: 1,
       duration: 0.4,
       ease: 'power3.inOut',
       onComplete: () => {
         router.push(href)
+        // Jump to the top instantly. A plain scrollTo(0,0) would inherit the
+        // home page's `scroll-behavior: smooth`, animating the scroll — so on a
+        // tall incoming page (Check Deposit, Toyota Yui) the reveal shows it
+        // mid-scroll before it settles. Force an instant jump via a temporary
+        // scroll-behavior override.
+        const root = document.documentElement
+        const prevBehavior = root.style.scrollBehavior
+        root.style.scrollBehavior = 'auto'
         window.scrollTo(0, 0)
-        gsap.set(el, { transformOrigin: 'top' })
+        root.style.scrollBehavior = prevBehavior
+        gsap.set(el, { transformOrigin: 'bottom' })
         gsap.to(el, {
           scaleY: 0,
           duration: 0.5,
