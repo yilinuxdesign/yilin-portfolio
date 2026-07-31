@@ -1405,8 +1405,9 @@ html.snap-edges {
 .cs-card-headwrap { margin-top: auto; display: flex; flex-direction: column; gap: clamp(8px, 1vw, 14px); }
 .cs-card-title {
   font-family: var(--font-display); font-weight: var(--display-weight);
-  font-size: clamp(24px, 2.7vw, 42px); letter-spacing: var(--display-tracking);
-  line-height: 1.05; display: inline-flex; align-items: center; gap: 14px;
+  font-size: clamp(16px, 2vw, 28px); letter-spacing: var(--display-tracking);
+  line-height: 1.05; display: inline-flex; align-items: center; gap: 12px;
+  white-space: nowrap;
 }
 .cs-card-arrow {
   display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
