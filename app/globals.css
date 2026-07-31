@@ -214,9 +214,15 @@ body {
 /* Light mode: CV cards are transparent (no fill) — border + soft glow define
    them, matching the "View all selected work" card. */
 [data-theme="neon"][data-mode="light"] .cv-card { background: transparent; }
+/* Prev/next case-study cards match the "View all selected work" back-cta:
+   transparent, rule-soft border, soft accent glow, gradient-glyph arrow. */
 [data-theme="neon"] .cs-card {
   background: transparent; color: var(--fg);
-  border: 1.5px solid color-mix(in oklab, var(--fg-faint) 60%, transparent);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+[data-theme="neon"] .cs-card:hover {
+  box-shadow: 0 0 22px 3px color-mix(in oklab, var(--accent) 60%, transparent);
 }
 [data-theme="neon"] .cs-card::before {
   background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
@@ -225,10 +231,15 @@ body {
 [data-theme="neon"] .cs-card:hover .cs-card-eyebrow,
 [data-theme="neon"] .cs-card:hover .cs-card-sub { color: black; }
 [data-theme="neon"] .cs-card-eyebrow { color: var(--fg-faint); }
-[data-theme="neon"] .cs-card-arrow { background: var(--fg); color: var(--bg); }
+[data-theme="neon"] .cs-card-arrow {
+  background: linear-gradient(90deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 55%, transparent);
+}
 [data-theme="neon"] .cs-card:hover .cs-card-arrow {
-  background: linear-gradient(135deg, oklch(0.72 0.19 300), oklch(0.78 0.16 190));
-  color: var(--bg);
+  background: none; -webkit-background-clip: border-box; background-clip: border-box;
+  color: black; -webkit-text-fill-color: black; box-shadow: none;
 }
 [data-theme="neon"] .back-cta {
   background: transparent; color: var(--fg);
