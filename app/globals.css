@@ -211,8 +211,8 @@ body {
 [data-theme="neon"] .cs-card-title,
 [data-theme="neon"] .cv-card-title { color: var(--fg); }
 [data-theme="neon"] .detail-title { color: var(--fg-muted); }
-/* Light mode: CV cards are transparent (matching the "View all selected work"
-   card) rather than the tinted bg-elev grey — the border defines them. */
+/* Light mode: CV cards are transparent (no fill) — border + soft glow define
+   them, matching the "View all selected work" card. */
 [data-theme="neon"][data-mode="light"] .cv-card { background: transparent; }
 [data-theme="neon"] .cs-card {
   background: transparent; color: var(--fg);
