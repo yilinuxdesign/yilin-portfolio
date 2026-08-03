@@ -336,6 +336,11 @@ body {
 @media (max-width: 640px) {
   .nav-logo > span:last-child { display: none; }
 }
+/* The wordmark PNG is dark; invert it to white so it stays visible on the
+   dark theme. Light mode keeps the original artwork. */
+[data-mode="dark"] .nav-logo img {
+  filter: brightness(0) invert(1);
+}
 .nav-links {
   display: flex; gap: clamp(20px, 3vw, 40px);
   font-family: var(--font-ui); font-size: 14px; letter-spacing: -0.005em;
