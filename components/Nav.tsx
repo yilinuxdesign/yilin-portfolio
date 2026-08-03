@@ -50,7 +50,7 @@ export default function Nav({ mini = false }: { mini?: boolean }) {
             Résumé
           </a>
           <Link
-            className="nav-link"
+            className="nav-link nav-contact"
             href="mailto:yilinuxdesign@gmail.com?subject=Hello%20Yilin"
             style={{ textDecoration: 'none' }}
           >

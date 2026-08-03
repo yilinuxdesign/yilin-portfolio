@@ -558,7 +558,7 @@ const STATES = [
 // ── Hero: the guided auto-capture camera + the capture-state system ──
 export function CheckDepositHero() {
   return (
-    <div className="reveal" style={{
+    <div className="reveal cd-hero-grid" style={{
       background: '#161617', borderRadius: 10, padding: 'clamp(28px, 4vw, 56px)',
       display: 'grid', gridTemplateColumns: 'minmax(0, 380px) 1fr', gap: 'clamp(28px, 5vw, 72px)',
       alignItems: 'center',

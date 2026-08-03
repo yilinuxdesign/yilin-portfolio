@@ -335,6 +335,8 @@ body {
 }
 @media (max-width: 640px) {
   .nav-logo > span:last-child { display: none; }
+  /* Trim the nav on phones — Contact lives in the footer / hero anyway. */
+  .nav-contact { display: none; }
 }
 /* The wordmark PNG is dark; invert it to white so it stays visible on the
    dark theme. Light mode keeps the original artwork. */
@@ -375,6 +377,13 @@ body {
   align-content: start;
   gap: clamp(28px, 5vh, 64px);
   text-align: left;
+}
+/* On phones the hero content is taller than the viewport; letting it keep
+   height:100% made the bottom meta overflow the section and collide with the
+   first project. Let it flow and grow the section instead. */
+@media (max-width: 640px) {
+  .hero-layout { height: auto; gap: 28px; }
+  .snap.hero { min-height: auto; padding-top: 88px; padding-bottom: 48px; }
 }
 .hero-top {
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
@@ -812,6 +821,23 @@ body {
   padding-top: 32px; border-top: 1px solid var(--rule);
 }
 @media (max-width: 720px) { .detail-meta { grid-template-columns: 1fr 1fr; } }
+/* Check Deposit hero: stack the camera over its copy on phones (the fixed
+   380px phone column otherwise crushes the text to one word per line). */
+@media (max-width: 640px) {
+  .cd-hero-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+}
+/* "By the numbers" metrics — auto-fit so the big figures never overflow on
+   narrow screens (they wrap to 2 columns on phones instead of forcing N). */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 32px;
+  padding: 32px 0 0;
+}
+@media (max-width: 560px) {
+  .metrics-grid { gap: 24px 20px; }
+  .metrics-grid [data-metric-value] { font-size: clamp(40px, 12vw, 64px) !important; }
+}
 .meta-item h5 {
   font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--fg-faint); margin: 0 0 8px; font-weight: 500;
@@ -886,6 +912,11 @@ body {
 }
 @media (max-width: 880px) {
   .cv-row-list { flex-direction: column; gap: 16px; }
+  /* In the stacked column, flex:1 1 0 starves cards of height and clips the
+     title/summary. Size each card to its content instead. Descendant selector
+     (higher specificity) so it beats the base `.cv-card { flex: 1 1 0 }` rule
+     that appears later in the file. */
+  .cv-row-list .cv-card { flex: none; }
 }
 .cv-card {
   flex: 1 1 0;
@@ -1249,6 +1280,8 @@ html.snap-edges {
   opacity: 0; pointer-events: none; transform: translateY(-50%) translateX(12px);
 }
 .slide-dots.visible { opacity: 1; pointer-events: auto; }
+/* No slide pagination on phones (it also overflowed the viewport edge). */
+@media (max-width: 640px) { .slide-dots { display: none; } }
 .slide-dot {
   position: relative; width: 24px; height: 18px;
   display: flex; align-items: center; justify-content: center; cursor: pointer;

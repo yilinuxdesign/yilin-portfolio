@@ -167,11 +167,7 @@ export default function ProjectPage() {
           <h2>By the numbers</h2>
           <span className="count">post-launch · validated</span>
         </div>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${project.metrics.length}, 1fr)`,
-          gap: 32, padding: '32px 0 0',
-        }}>
+        <div className="metrics-grid">
           {project.metrics.map((m) => (
             <div key={m.label} className="reveal" style={{ paddingTop: 8 }}>
               <div
