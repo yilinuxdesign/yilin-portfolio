@@ -98,7 +98,8 @@ export default function RootLayout({
           <CurtainTransition>
             <CustomCursor />
             {children}
-            <TweaksPanel />
+            {/* Authoring-only theme controls — never shipped to visitors. */}
+            {process.env.NODE_ENV === 'development' && <TweaksPanel />}
           </CurtainTransition>
         </ThemeProvider>
       </body>
