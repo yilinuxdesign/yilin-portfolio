@@ -38,15 +38,12 @@ export default function CurtainTransition({ children }: { children?: React.React
         // home page's `scroll-behavior: smooth`, animating the scroll — so on a
         // tall incoming page (Check Deposit, Toyota Yui) the reveal shows it
         // mid-scroll before it settles. Force an instant jump via a temporary
-        // scroll-behavior override. Skip this when the target is an in-page
-        // anchor (e.g. /#work) — the destination scrolls itself to the anchor.
-        if (!href.includes('#')) {
-          const root = document.documentElement
-          const prevBehavior = root.style.scrollBehavior
-          root.style.scrollBehavior = 'auto'
-          window.scrollTo(0, 0)
-          root.style.scrollBehavior = prevBehavior
-        }
+        // scroll-behavior override.
+        const root = document.documentElement
+        const prevBehavior = root.style.scrollBehavior
+        root.style.scrollBehavior = 'auto'
+        window.scrollTo(0, 0)
+        root.style.scrollBehavior = prevBehavior
         gsap.set(el, { transformOrigin: 'bottom' })
         gsap.to(el, {
           scaleY: 0,
