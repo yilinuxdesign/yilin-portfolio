@@ -47,9 +47,9 @@ export const projects: Project[] = [
     outcome:
       'The redesign replaced an inaccessible visualization with a WCAG-compliant bar chart, made period-over-period comparison faster with Quick Chips, opened up category-to-transaction drill-down, and delivered a consistent experience across mobile and browser — reusing components to keep engineering complexity down, with the architecture in place for insights and budget tracking to come. The open question from a stakeholder review — if a customer has a monthly spending goal, how does this tell them whether they\'re on track? — became the guiding insight: the experience needs to say what the data means, not just what it is.',
     metrics: [
-      { label: 'WCAG 2.1 AA compliance', value: '100%', delta: 'was repeatedly failing' },
-      { label: 'Faster period comparison', value: '3×', delta: 'via one-tap Quick Chips' },
-      { label: 'Spend-related support contacts', value: '−31%', delta: 'post-launch' },
+      { label: 'Spending categories', value: '14', delta: 'alphabetical, fixed order' },
+      { label: 'Time-period chips', value: '4', delta: 'one-tap' },
+      { label: 'Platforms unified', value: '2', delta: 'mobile + browser' },
     ],
   },
   {
