@@ -46,6 +46,15 @@ const decisions: { tone: Tone; tag: string; title: string; body: string }[] = [
   },
 ]
 
+const outcomes: string[] = [
+  'Replaced an inaccessible visualization with a WCAG-compliant bar chart',
+  'Faster time-period comparison via one-tap Quick Chips',
+  'Deeper navigation from category to transaction detail',
+  'Consistent experience across Mobile and Browser',
+  'Reused existing components to reduce engineering complexity',
+  'Architecture in place for future insights and budget tracking',
+]
+
 const learnings: string[] = [
   'Accessibility can drive better design, not just compliant design — the constraint led to a simpler, more scalable pattern overall.',
   'Consistency can beat “optimized” data presentation — fixed category order made comparison easier, even at the cost of ranking by relevance.',
@@ -122,6 +131,34 @@ export function CardSpendResearch() {
             needs to tell customers what the data <em>means</em>, not just what it <em>is</em>.
           </p>
         </div>
+      </section>
+
+      {/* ── What shipped ── */}
+      <section className="container" style={{ paddingTop: 'clamp(64px, 9vh, 120px)' }}>
+        <div className="section-label" style={{ marginBottom: 'clamp(28px, 4vh, 48px)' }}>
+          <h2>What shipped</h2>
+          <span className="count">delivered this release</span>
+        </div>
+        <ul style={{
+          listStyle: 'none', margin: 0, padding: 0,
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))',
+          gap: '0 clamp(24px, 4vw, 48px)',
+        }}>
+          {outcomes.map((o, i) => (
+            <li key={i} className="reveal" style={{
+              display: 'flex', gap: 12, alignItems: 'flex-start',
+              padding: 'clamp(14px, 2vh, 18px) 0', borderTop: '1px solid var(--rule-soft)',
+            }}>
+              <span aria-hidden="true" style={{
+                flexShrink: 0, marginTop: 1, width: 20, height: 20, borderRadius: '50%',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                background: 'color-mix(in oklab, var(--accent) 18%, transparent)',
+                color: 'var(--accent)', fontSize: 12, fontWeight: 700,
+              }}>✓</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(15px, 1.2vw, 17px)', lineHeight: 1.5, color: 'var(--fg)' }}>{o}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ── From reporting to guidance ── */}
