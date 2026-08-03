@@ -29,27 +29,27 @@ export const projects: Project[] = [
   {
     id: 'card-spend',
     index: '02',
-    title: 'Credit Card Spend Summary — Helping Cardholders See Where the Money Goes',
+    title: 'Spend Summary Redesign — Making Spending Visualization Accessible and Built to Scale',
     short: 'Spend Summary',
-    kind: 'In Progress',
+    kind: 'Industry Work',
     year: '2026',
     role: 'Senior Product Designer',
-    tags: ['Data Viz', 'Mobile Design', 'Personal Finance'],
+    tags: ['Accessibility', 'Information Architecture', 'Design Systems'],
     color: 'oklch(0.50 0.15 175)',
     heroImage: '/assets/spend-hero.png',
-    status: 'draft',
+    status: 'shipped',
     summary:
-      'An end-of-cycle spend summary that turns a wall of transactions into a glanceable story — what changed, and what\'s worth a second look.',
+      'A redesign that began as an accessibility fix — the donut chart kept failing WCAG — and became a full rethink of how spending is visualized and navigated across mobile and browser.',
     problem:
-      'Cardholders open the app at statement time to find out \'what did I spend on?\' and currently get either a flat transaction list or a generic pie chart. Neither answers the real question. Engagement with the existing insights surface is < 8% MoM.',
+      'Three problems compounded. The donut chart couldn\'t be made WCAG-compliant no matter how many times the Accessibility team iterated — the pattern itself was the issue. It was also descriptive, not actionable: it showed what customers spent but never answered the questions they actually had — am I on track, am I spending more than usual, which categories are creeping up? And whatever replaced it had to scale to 14 spending categories, multiple cards and time periods, and high transaction volumes across both mobile and browser.',
     approach:
-      'Auditing six competitor patterns, running diary studies with 14 cardholders across spend tiers, and prototyping three narrative formats — a vertical recap, a swipeable card stack, and an annotated chart. Currently in second-round usability testing.',
+      'Funding covered accessibility remediation and modernization — not the full vision of budgets, trends, and AI insights — but leadership was explicit that funding could never justify compromising accessibility. So I solved compliance properly and built the rest as a foundation to grow into: a progressive bar chart (distinct color, amount, percentage, and transaction count per category) validated with Accessibility and Design Systems; one-tap Quick Chips for time periods; a validated-but-counterintuitive alphabetical category order so positions stay fixed when comparing periods; simplified percentages; a category → transaction-list → transaction-detail drill-down that reused an existing component; and a two-column browser layout with sticky category navigation.',
     outcome:
-      'In progress — targeting GA in Q3 2026. Early prototype testing shows 4× longer time-on-surface and qualitative shifts from \'this is just numbers\' to \'oh, that\'s actually useful.\'',
+      'The redesign replaced an inaccessible visualization with a WCAG-compliant bar chart, made period-over-period comparison faster with Quick Chips, opened up category-to-transaction drill-down, and delivered a consistent experience across mobile and browser — reusing components to keep engineering complexity down, with the architecture in place for insights and budget tracking to come. The open question from a stakeholder review — if a customer has a monthly spending goal, how does this tell them whether they\'re on track? — became the guiding insight: the experience needs to say what the data means, not just what it is.',
     metrics: [
-      { label: 'Diary participants', value: '14' },
-      { label: 'Prototype variants', value: '3' },
-      { label: 'Target GA', value: 'Q3 26' },
+      { label: 'Spending categories', value: '14', delta: 'alphabetical, fixed order' },
+      { label: 'Time-period chips', value: '4', delta: 'one-tap' },
+      { label: 'Platforms unified', value: '2', delta: 'mobile + browser' },
     ],
   },
   {
@@ -191,7 +191,7 @@ export function quoteFor(id: string): string {
     'biller-search': 'I just typed the way I thought about it — like, \'electric\'. And it found my power company. That\'s never happened before.',
     'citi-app': 'It used to feel like a menu of every product the bank sells. Now it feels like an app that knows I\'m here to pay something.',
     'toyota-yui': 'She felt like a quiet co-pilot — not a robot reading off a list.',
-    'card-spend': 'Wait — I actually want to keep reading. That\'s never been true of a credit-card statement before.',
+    'card-spend': 'Knowing what I spent is fine — but what I really want to know is whether that\'s more than usual.',
     'subscriptions': 'I genuinely forgot I was paying for two of these. And now I can cancel one without leaving the app.',
   }
   return map[id] || 'It feels obvious now, but only because someone designed it that way.'

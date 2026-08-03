@@ -826,6 +826,14 @@ body {
 @media (max-width: 640px) {
   .cd-hero-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
 }
+/* Spend Summary case-study two-column text blocks — stack on narrow screens. */
+.cs-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+@media (max-width: 720px) { .cs-two-col { grid-template-columns: 1fr; } }
 /* "By the numbers" metrics — auto-fit so the big figures never overflow on
    narrow screens (they wrap to 2 columns on phones instead of forcing N). */
 .metrics-grid {
