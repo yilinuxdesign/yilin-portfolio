@@ -27,6 +27,42 @@ export default function HomePage() {
     return () => document.documentElement.classList.remove('snap-edges')
   }, [])
 
+  // Arrived via the "View all selected work" anchor (/#work): jump straight to
+  // the projects with the first one at the very top (hero hidden). Done
+  // instantly under the page-transition curtain. scroll-snap is suspended for
+  // the jump so proximity snapping doesn't pull us back to the project's
+  // 144px snap offset (scroll-padding + scroll-margin) and re-expose the hero.
+  useEffect(() => {
+    if (window.location.hash !== '#work') return
+    const root = document.documentElement
+    const jump = () => {
+      const el = document.getElementById('work')
+      if (!el) return
+      root.style.scrollSnapType = 'none'
+      const prevBeh = root.style.scrollBehavior
+      root.style.scrollBehavior = 'auto'
+      window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY)
+      root.style.scrollBehavior = prevBeh
+    }
+    jump()
+    // Re-apply once in case layout shifts as the hero font settles.
+    const t = window.setTimeout(jump, 250)
+    // Re-enable snap on the first user gesture. Reapplying it immediately would
+    // instantly snap us back to the project's 144px offset and re-expose the
+    // hero, so we wait until the user actually starts scrolling.
+    const restore = () => { root.style.scrollSnapType = '' }
+    const opts = { once: true, passive: true } as AddEventListenerOptions
+    window.addEventListener('wheel', restore, opts)
+    window.addEventListener('touchmove', restore, opts)
+    window.addEventListener('keydown', restore, { once: true })
+    return () => {
+      window.clearTimeout(t)
+      window.removeEventListener('wheel', restore)
+      window.removeEventListener('touchmove', restore)
+      window.removeEventListener('keydown', restore)
+    }
+  }, [])
+
   // Dots are visible only while a project is the primary thing on screen:
   // once the first project reaches the top, and until the last project has
   // mostly scrolled away.
@@ -101,6 +137,7 @@ export default function HomePage() {
       {visibleProjects.map((p, i) => (
         <section
           key={p.id}
+          id={i === 0 ? 'work' : undefined}
           ref={(el) => { slideRefs.current[i + 1] = el }}
           className="snap project-row-slide"
         >

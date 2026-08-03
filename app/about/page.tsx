@@ -338,7 +338,7 @@ export default function AboutPage() {
 
         <button
           className="back-cta"
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/#work')}
           style={{ width: '100%', cursor: 'pointer', textAlign: 'left' }}
         >
           <span className="back-cta-eyebrow mono">↩ Continue browsing</span>
