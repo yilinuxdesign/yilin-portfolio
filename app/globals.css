@@ -711,8 +711,8 @@ body {
 }
 @media (max-width: 880px) { .about-grid { grid-template-columns: 1fr; } }
 .about-portrait {
-  aspect-ratio: 4 / 5; background: var(--bg-elev); border-radius: 4px;
-  position: relative; overflow: hidden; border: 1px solid var(--rule-soft);
+  aspect-ratio: 4 / 5; background: transparent; border-radius: 4px;
+  position: relative; overflow: hidden;
 }
 /* Line-art portrait is black lines on a transparent background — invert to
    white on the dark theme so it stays visible (same trick as the nav logo). */
