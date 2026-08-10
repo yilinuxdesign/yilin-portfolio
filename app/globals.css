@@ -714,6 +714,9 @@ body {
   aspect-ratio: 4 / 5; background: var(--bg-elev); border-radius: 4px;
   position: relative; overflow: hidden; border: 1px solid var(--rule-soft);
 }
+/* Line-art portrait is black lines on a transparent background — invert to
+   white on the dark theme so it stays visible (same trick as the nav logo). */
+[data-mode="dark"] .about-portrait img { filter: brightness(0) invert(1); }
 .about-text p {
   font-family: var(--font-body); font-size: clamp(15px, 1.1vw, 17px);
   line-height: 1.55; color: var(--fg-muted); margin: 0 0 24px; text-wrap: pretty;

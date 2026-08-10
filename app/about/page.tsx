@@ -200,9 +200,9 @@ export default function AboutPage() {
 
           <div className="about-portrait">
             <img
-              src="/assets/portrait.jpg"
+              src="/assets/portrait.png"
               alt="Yilin Jia — illustrated portrait"
-              style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#ffffff', display: 'block', borderRadius: 6 }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', borderRadius: 6 }}
             />
           </div>
         </div>
