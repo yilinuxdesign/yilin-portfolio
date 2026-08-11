@@ -54,7 +54,7 @@ const learnings: string[] = [
 
 function toneColor(t: Tone): string {
   return ({
-    pos: 'oklch(0.55 0.13 150)',
+    pos: 'var(--fg-muted)',
     neg: 'var(--accent)',
     accent: 'var(--accent)',
     neutral: 'var(--fg-faint)',

@@ -145,7 +145,7 @@ body {
   --bg-elev: oklch(0.205 0.008 280);
   --fg: oklch(0.96 0.01 280);
   --fg-muted: oklch(0.74 0.02 280);
-  --fg-faint: oklch(0.58 0.02 280);
+  --fg-faint: oklch(0.63 0.02 280);
   --rule: oklch(0.30 0.03 290);
   --rule-soft: oklch(0.24 0.025 290);
   --accent: oklch(0.72 0.19 300);
@@ -156,10 +156,10 @@ body {
   --bg-elev: oklch(0.93 0.012 280);
   --fg: oklch(0.20 0.02 280);
   --fg-muted: oklch(0.42 0.02 280);
-  --fg-faint: oklch(0.54 0.02 280);
+  --fg-faint: oklch(0.48 0.02 280);
   --rule: oklch(0.85 0.015 280);
   --rule-soft: oklch(0.90 0.01 280);
-  --accent: oklch(0.55 0.19 300);
+  --accent: oklch(0.42 0.18 300);
   --accent-bg: oklch(0.90 0.06 290);
 }
 [data-theme="neon"] .hero-name em,
@@ -246,6 +246,10 @@ body {
   border: 1px solid var(--rule-soft);
   box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 40%, transparent);
 }
+/* Neon back-cta is transparent (not the inverted --fg card), so its eyebrow/meta
+   must use a readable fg tone instead of the bg-tinted color meant for that card. */
+[data-theme="neon"] .back-cta-eyebrow,
+[data-theme="neon"] .back-cta-meta { color: var(--fg-muted); }
 [data-theme="neon"] .back-cta:hover {
   box-shadow: 0 0 22px 3px color-mix(in oklab, var(--accent) 60%, transparent);
 }
@@ -713,7 +717,7 @@ body {
 .about-portrait {
   aspect-ratio: 4 / 5; background: transparent; border-radius: 4px;
   position: relative; overflow: hidden;
-  max-width: 280px; margin-left: auto;
+  max-width: 280px; margin-left: auto; margin-right: auto;
 }
 /* Line-art portrait is black lines on a transparent background — invert to
    white on the dark theme so it stays visible (same trick as the nav logo). */

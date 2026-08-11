@@ -32,8 +32,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.dataset.theme = state.theme
     root.dataset.mode = state.mode
     root.dataset.density = state.density
-    const accentColor = ACCENTS[state.theme]?.[state.accent] ?? ACCENTS[state.theme].default
-    root.style.setProperty('--accent', accentColor)
+    // Only override --accent inline for a non-default accent (the tweak panel).
+    // For the default, let the theme's CSS --accent win so it can be
+    // mode-aware (the neon accent is darker in light mode for AA contrast).
+    if (state.accent && state.accent !== 'default') {
+      const accentColor = ACCENTS[state.theme]?.[state.accent] ?? ACCENTS[state.theme].default
+      root.style.setProperty('--accent', accentColor)
+    } else {
+      root.style.removeProperty('--accent')
+    }
   }, [state])
 
   const setTheme = useCallback((theme: Theme) =>
