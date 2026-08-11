@@ -1500,3 +1500,132 @@ html.snap-edges {
 .mono        { font-family: var(--font-mono); }
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ────────── Career timeline (About) ────────── */
+.tl { --tl-work: var(--accent); --tl-edu: oklch(0.78 0.16 190); --tl-row-h: 64px; --tl-y: 132px; padding: 8px 0 88px; }
+[data-mode="light"] .tl { --tl-edu: oklch(0.55 0.13 195); }
+
+.tl-legend { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 22px; }
+.tl-key { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
+.tl-emo { font-style: normal; font-size: 14px; line-height: 1; display: inline-block; }
+.tl-bar-emo { font-size: 12px; flex-shrink: 0; }
+.tl-y-emo { font-size: 11px; margin-right: 5px; opacity: 0.9; vertical-align: 1px; }
+.tl-hint { margin-left: auto; font-size: 11px; letter-spacing: 0.06em; color: var(--fg-faint); }
+
+.tl-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; padding-bottom: 4px; }
+.tl-stage { position: relative; min-width: 760px; }
+
+.tl-grid { position: absolute; left: var(--tl-y); right: 0; top: 0; bottom: 0; pointer-events: none; }
+.tl-gridline { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--rule-soft); }
+
+.tl-group { display: grid; grid-template-columns: var(--tl-y) 1fr; align-items: stretch; }
+.tl-ylabel { position: relative; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; padding: 14px 20px 0 0; border-right: 1px dashed var(--rule); text-align: right; }
+.tl-yleg { font-size: 9.5px; letter-spacing: 0.14em; color: var(--fg-faint); opacity: 0.7; }
+.tl-yname { font-family: var(--font-display); font-weight: var(--display-weight); font-size: 15px; line-height: 1.15; letter-spacing: -0.01em; color: var(--fg-muted); transition: color 0.25s ease; }
+.tl-ysub { font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--fg-faint); }
+.tl-pin { position: absolute; right: -6px; top: 18px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 2px solid var(--rule); transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.tl-group.is-on .tl-yname { color: var(--fg); }
+.tl-group.is-on .tl-yleg { opacity: 1; color: var(--accent); }
+.tl-group.is-on .tl-pin { border-color: var(--accent); transform: scale(1.35); box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 65%, transparent); }
+.tl-ylabel--axis { border-right-color: transparent; padding-top: 0; justify-content: flex-start; }
+.tl-ylabel--axis .tl-pin { display: none; }
+.tl-lanes { position: relative; }
+.tl-track { position: relative; }
+.tl-row { position: relative; height: var(--tl-row-h); }
+
+.tl-label { position: absolute; top: 8px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-muted); white-space: nowrap; pointer-events: none; transition: color 0.25s ease; }
+.tl-label.is-active { color: var(--fg); }
+.tl-bar {
+  position: absolute; bottom: 10px;
+  height: 26px; min-width: 10px; padding: 0 8px; gap: 6px;
+  display: flex; align-items: center;
+  border-radius: 999px; cursor: pointer;
+  font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+  text-align: left; white-space: nowrap; overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--tl-delay, 0ms),
+              background 0.25s ease, border-color 0.25s ease, filter 0.25s ease;
+}
+.tl-bar.is-drawn { clip-path: inset(0 0 0 0); }
+.tl-bar--work { border: 1.5px solid color-mix(in oklab, var(--tl-work) 55%, transparent); background: color-mix(in oklab, var(--tl-work) 14%, transparent); color: var(--fg); }
+.tl-bar--edu  { border: 1.5px solid color-mix(in oklab, var(--tl-edu) 55%, transparent);  background: color-mix(in oklab, var(--tl-edu) 14%, transparent);  color: var(--fg); }
+.tl-bar--work.is-active { background: color-mix(in oklab, var(--tl-work) 34%, transparent); border-color: var(--tl-work); filter: drop-shadow(0 0 12px color-mix(in oklab, var(--tl-work) 55%, transparent)); }
+.tl-bar--edu.is-active  { background: color-mix(in oklab, var(--tl-edu) 34%, transparent);  border-color: var(--tl-edu);  filter: drop-shadow(0 0 12px color-mix(in oklab, var(--tl-edu) 55%, transparent)); }
+.tl-bar:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+.tl-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--tl-work); margin-right: 8px; flex-shrink: 0; animation: tl-pulse 1.9s ease-in-out infinite; }
+@keyframes tl-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.72); } }
+
+
+.tl-axis { position: relative; height: 34px; margin: 6px 0 10px; border-top: 1px solid var(--rule); }
+.tl-tick { position: absolute; top: 9px; transform: translateX(-50%); font-size: 11px; letter-spacing: 0.06em; color: var(--fg-faint); }
+.tl-now { position: absolute; top: 9px; transform: translateX(-50%); font-size: 11px; letter-spacing: 0.06em; font-weight: 700; color: var(--tl-work); }
+
+.tl-detail { margin-top: 34px; padding: clamp(22px, 2.4vw, 32px); border: 1px solid var(--rule); border-radius: 12px; background: color-mix(in oklab, var(--fg) 2.5%, transparent); animation: tl-detail-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes tl-detail-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.tl-detail-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.tl-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+.tl-chip--work { color: var(--tl-work); border: 1px solid color-mix(in oklab, var(--tl-work) 50%, transparent); }
+.tl-chip--edu  { color: var(--tl-edu);  border: 1px solid color-mix(in oklab, var(--tl-edu) 50%, transparent); }
+.tl-detail-year { font-size: 12px; letter-spacing: 0.06em; color: var(--fg); }
+.tl-detail-dur { font-size: 12px; letter-spacing: 0.06em; color: var(--fg-faint); }
+.tl-detail-title { font-family: var(--font-display); font-weight: var(--display-weight); font-size: clamp(22px, 2.2vw, 30px); line-height: 1.2; letter-spacing: var(--display-tracking); margin: 0 0 6px; color: var(--fg); }
+.tl-detail-place { font-size: 12px; letter-spacing: 0.05em; color: var(--fg-muted); margin-bottom: 16px; }
+.tl-detail-lead { font-family: var(--font-body); font-size: 15px; line-height: 1.6; color: var(--fg-muted); margin: 0; text-wrap: pretty; }
+.tl-detail-bullets { margin: 16px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.tl-detail-bullets li { position: relative; padding-left: 20px; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--fg-muted); text-wrap: pretty; }
+.tl-detail-bullets li::before { content: ""; position: absolute; left: 4px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+@media (max-width: 640px) {
+  .tl-hint { display: none; }
+  .tl { --tl-row-h: 58px; --tl-y: 96px; }
+}
+
+
+/* ────────── Toolkit chip cloud (About) ────────── */
+.tk { --tk-a: var(--accent); --tk-b: oklch(0.78 0.16 190); --tk-c: oklch(0.80 0.15 75); padding: 30px 0 84px; }
+[data-mode="light"] .tk { --tk-b: oklch(0.55 0.13 195); --tk-c: oklch(0.58 0.14 65); }
+.tk-tone-a { --tk: var(--tk-a); }
+.tk-tone-b { --tk: var(--tk-b); }
+.tk-tone-c { --tk: var(--tk-c); }
+
+.tk-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+.tk-filter {
+  --tk: var(--fg-faint);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border-radius: 999px; cursor: pointer;
+  font-family: var(--font-ui); font-size: 13px; font-weight: 600; color: var(--fg-muted);
+  border: 1px solid color-mix(in oklab, var(--tk) 45%, transparent);
+  background: transparent;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.tk-filter:hover { color: var(--fg); border-color: var(--tk); }
+.tk-filter.is-on { color: var(--fg); border-color: var(--tk); background: color-mix(in oklab, var(--tk) 16%, transparent); box-shadow: 0 0 14px color-mix(in oklab, var(--tk) 45%, transparent); }
+.tk-filter:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.tk-filter-emo { font-size: 14px; line-height: 1; }
+.tk-filter-n { font-size: 10.5px; letter-spacing: 0.06em; color: var(--fg-faint); }
+.tk-filter.is-on .tk-filter-n { color: var(--tk); }
+
+.tk-cloud { display: flex; flex-wrap: wrap; gap: 11px; }
+.tk-chip {
+  --tk: var(--fg-faint);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 999px;
+  font-family: var(--font-ui); font-size: 14.5px; color: var(--fg-muted);
+  border: 1px solid color-mix(in oklab, var(--tk) 38%, transparent);
+  background: color-mix(in oklab, var(--tk) 7%, transparent);
+  opacity: 0; transform: translateY(10px) rotate(var(--tk-rot, 0deg));
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tk-d, 0ms),
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tk-d, 0ms),
+              color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, filter 0.3s ease;
+  cursor: default;
+}
+.tk-chip.is-lit { opacity: 1; transform: translateY(0) rotate(var(--tk-rot, 0deg)); }
+.tk-chip:hover { color: var(--fg); border-color: var(--tk); background: color-mix(in oklab, var(--tk) 20%, transparent); box-shadow: 0 0 16px color-mix(in oklab, var(--tk) 45%, transparent); transform: translateY(-4px) rotate(0deg) scale(1.04); transition-delay: 0ms; }
+.tk-chip.is-dim { opacity: 0.24; filter: saturate(0.3); transition-delay: 0ms; }
+.tk-chip.is-dim:hover { opacity: 0.45; transform: translateY(0) rotate(var(--tk-rot, 0deg)); box-shadow: none; }
+.tk-chip-emo { font-style: normal; font-size: 12.5px; line-height: 1; opacity: 0.85; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-chip { transition-duration: 0.01ms; }
+}
